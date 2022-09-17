@@ -1,0 +1,314 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api\\DeRole.Api.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api.Application\\DeRole.Api.Service.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api.Application\\DeRole.Api.Service.csproj",
+        "projectName": "DeRole.Api.Service",
+        "projectPath": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api.Application\\DeRole.Api.Service.csproj",
+        "packagesPath": "C:\\Users\\felip\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\felip\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Domain\\DeRole.Api.Domain.csproj": {
+                "projectPath": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Domain\\DeRole.Api.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api.Data\\DeRole.Api.Data.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api.Data\\DeRole.Api.Data.csproj",
+        "projectName": "DeRole.Api.Data",
+        "projectPath": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api.Data\\DeRole.Api.Data.csproj",
+        "packagesPath": "C:\\Users\\felip\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api.Data\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\felip\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Domain\\DeRole.Api.Domain.csproj": {
+                "projectPath": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Domain\\DeRole.Api.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api.DependencyInjection\\DeRole.Api.DependencyInjection.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api.DependencyInjection\\DeRole.Api.DependencyInjection.csproj",
+        "projectName": "DeRole.Api.DependencyInjection",
+        "projectPath": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api.DependencyInjection\\DeRole.Api.DependencyInjection.csproj",
+        "packagesPath": "C:\\Users\\felip\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api.DependencyInjection\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\felip\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api.Application\\DeRole.Api.Service.csproj": {
+                "projectPath": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api.Application\\DeRole.Api.Service.csproj"
+              },
+              "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api.Data\\DeRole.Api.Data.csproj": {
+                "projectPath": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api.Data\\DeRole.Api.Data.csproj"
+              },
+              "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Domain\\DeRole.Api.Domain.csproj": {
+                "projectPath": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Domain\\DeRole.Api.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api\\DeRole.Api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api\\DeRole.Api.csproj",
+        "projectName": "DeRole.Api",
+        "projectPath": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api\\DeRole.Api.csproj",
+        "packagesPath": "C:\\Users\\felip\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\felip\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api.DependencyInjection\\DeRole.Api.DependencyInjection.csproj": {
+                "projectPath": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Api.DependencyInjection\\DeRole.Api.DependencyInjection.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.2.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Domain\\DeRole.Api.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Domain\\DeRole.Api.Domain.csproj",
+        "projectName": "DeRole.Api.Domain",
+        "projectPath": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Domain\\DeRole.Api.Domain.csproj",
+        "packagesPath": "C:\\Users\\felip\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\felip\\OneDrive\\Área de Trabalho\\DeRole.Api\\DeRole.Api\\DeRole.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\felip\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
