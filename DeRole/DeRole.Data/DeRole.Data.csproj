@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DeRole.Entity\DeRole.Entity.csproj" />
+  </ItemGroup>
+
 </Project>
