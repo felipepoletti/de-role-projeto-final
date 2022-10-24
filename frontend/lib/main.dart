@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'consts/global_colors.dart';
 import 'screens/home_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -41,12 +41,10 @@ class MyApp extends StatelessWidget {
 
           // selectionHandleColor: Colors.blue,
         ),
+        primarySwatch: Colors.blue,
 
-        // textTheme: TextTheme()
-        // textTheme: Theme.of(context).textTheme.apply(
-        //       bodyColor: Colors.black,
-        //       displayColor: Colors.black,
-        //     ),
+        textTheme: GoogleFonts.ptSansTextTheme(),
+
         cardColor: lightCardColor,
         brightness: Brightness.light,
         colorScheme: ThemeData().colorScheme.copyWith(

@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(22.0),
               child:Column(children: [
                 const SizedBox(
-                  height: 90,
+                  height: 60,
                 ),
                 Flexible(
                   child: Container(
@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 34,
+                  height: 40,
                 ),
                 Container(
                   width: double.infinity,
@@ -61,27 +61,33 @@ class _HomeScreenState extends State<HomeScreen> {
                     textAlign: TextAlign.left,
                   ),
                 ),
-                TextField(
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide:  const BorderSide(width: 4, color: Color(0xffF7C548))
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: const BorderSide(width: 5, color: Color(0xffF7C548))
-                      ),
-                      hintText: "Digite seu email",
-                      hintStyle: const TextStyle(fontSize: 16.00, fontWeight: FontWeight.bold,color: Color(0xffF7C548)),
-                    )
+                const SizedBox(
+                  height: 8,
+                ),
+                SizedBox(
+                  height: 80,
+                  child: TextField(
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide:  const BorderSide(width: 4, color: Color(0xffF7C548))
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(width: 5, color: Color(0xffF7C548))
+                        ),
+                        hintText: "Digite seu email",
+                        hintStyle: const TextStyle(fontSize: 16.00, fontWeight: FontWeight.bold,color: Color(0xffF7C548)),
+                      )
+                  ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
-                Container(
+                const SizedBox(
                   width: double.infinity,
-                  child: const Text(
+                  child:  Text(
                     "SENHA",
                     style: TextStyle(
                         color: Color(0xffF7C548),
@@ -91,29 +97,37 @@ class _HomeScreenState extends State<HomeScreen> {
                     textAlign: TextAlign.left,
                     ),
                 ),
-                TextField(
-                    keyboardType: TextInputType.text,
-                    obscureText: true,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide:  const BorderSide(width: 4, color: Color(0xffF7C548))
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: const BorderSide(width: 5, color: Color(0xffF7C548))
-                      ),
-                      hintText: "Digite sua senha",
-                      hintStyle: const TextStyle(fontSize: 16.00, fontWeight: FontWeight.bold,color: Color(0xffF7C548)),
-                    )
+                const SizedBox(
+                  height: 8,
                 ),
+                SizedBox(
+                  height: 80,
+                  child: TextField(
+                      keyboardType: TextInputType.text,
+                      obscureText: true,
+                      enableSuggestions: false,
+                      autocorrect: false,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide:  const BorderSide(width: 4, color: Color(0xffF7C548))
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(width: 5, color: Color(0xffF7C548))
+                        ),
+                        hintText: "Digite sua senha",
+                        hintStyle: const TextStyle(fontSize: 16.00, fontWeight: FontWeight.bold,color: Color(0xffF7C548)),
+                      )
+                  ),
+                ),
+
+
                 Padding(
-                  padding: const EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.only(top: 18),
                   child: SizedBox(
                     width: double.infinity,
-                    height: 50.00,
+                    height: 50,
                     child:  ElevatedButton(
                       onPressed: () { },
                       style: ElevatedButton.styleFrom(
@@ -122,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: const Text(
                         "ENTRAR",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -137,7 +151,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: TextStyle(
                             decoration: TextDecoration.underline,
                             decorationColor: Color(0xffF7C548),
-                            fontSize: 18,
+                            decorationThickness: 2,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: Color(0xffF7C548),
                           )
@@ -145,10 +160,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.only(top: 40),
                   child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
                         Flexible(
+                          flex: 3,
                             child: Text(
                               "não possui uma conta?",
                               style: TextStyle(
@@ -158,16 +175,22 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             )
                         ),
+
                         Flexible(
-                          child: Text(
-                              "cadastre-se",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                decoration: TextDecoration.underline,
-                                decorationColor: Color(0xffF7C548),
-                                fontSize: 18,
-                                color: Color(0xffF7C548),
-                              )
+                          flex: 2,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 8),
+                            child: Text(
+                                "cadastre-se",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline,
+                                  decorationThickness: 2,
+                                  decorationColor: Color(0xffF7C548),
+                                  fontSize: 18,
+                                  color: Color(0xffF7C548),
+                                )
+                            ),
                           ),
                         ),
                       ]
