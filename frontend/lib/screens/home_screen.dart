@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:store_api_flutter_course/consts/global_colors.dart';
 
 
 
@@ -25,59 +26,160 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: Scaffold(
-          body: Container(
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/main-bg-img.png"), fit: BoxFit.cover)),
-            child:  Padding(
-              padding: const EdgeInsets.all(8.0),
-                child:Column(children: [
-                  Flexible(
-                      child: Container(
-                        decoration: const BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage("assets/images/main-logo.png"), fit: BoxFit.contain)
-                            )
-                      ),
-                  ),
-                   Text(
-                    "E-mail"
-                  ),
-                  TextField(
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8)
-                    ),
-                    hintText: "Digite seu email",
-                    )
-                  ),
-                  const Text(
-                      "Senha"
-                  ),
-                  TextField(
-                      keyboardType: TextInputType.text,
-                      obscureText: true,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-
-                        ),
-                        hintText: "Digite sua senha",
+        onTap: () {FocusScope.of(context).unfocus();
+          },
+      child: Scaffold(
+          backgroundColor:  Colors.white,
+          resizeToAvoidBottomInset : false,
+          body: Padding(
+              padding: const EdgeInsets.all(22.0),
+              child:Column(children: [
+                const SizedBox(
+                  height: 90,
+                ),
+                Flexible(
+                  child: Container(
+                      height: size.height * 0.3,
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage("assets/images/logo-reduzido.png"), fit: BoxFit.contain )
                       )
                   ),
-                ],) ,
+                ),
+                const SizedBox(
+                  height: 34,
+                ),
+                Container(
+                  width: double.infinity,
+                  child:  const Text(
+                    "E-MAIL",
+                    style: TextStyle(
+                        color: Color(0xffF7C548),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                TextField(
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide:  const BorderSide(width: 4, color: Color(0xffF7C548))
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(width: 5, color: Color(0xffF7C548))
+                      ),
+                      hintText: "Digite seu email",
+                      hintStyle: const TextStyle(fontSize: 16.00, fontWeight: FontWeight.bold,color: Color(0xffF7C548)),
+                    )
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  width: double.infinity,
+                  child: const Text(
+                    "SENHA",
+                    style: TextStyle(
+                        color: Color(0xffF7C548),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18
+                    ),
+                    textAlign: TextAlign.left,
+                    ),
+                ),
+                TextField(
+                    keyboardType: TextInputType.text,
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide:  const BorderSide(width: 4, color: Color(0xffF7C548))
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(width: 5, color: Color(0xffF7C548))
+                      ),
+                      hintText: "Digite sua senha",
+                      hintStyle: const TextStyle(fontSize: 16.00, fontWeight: FontWeight.bold,color: Color(0xffF7C548)),
+                    )
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 50.00,
+                    child:  ElevatedButton(
+                      onPressed: () { },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xffF7C548),
+                      ),
+                      child: const Text(
+                        "ENTRAR",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ) ,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: RichText(
+                      text: const TextSpan(
+                          text: "esqueci minha senha",
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            decorationColor: Color(0xffF7C548),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xffF7C548),
+                          )
+                      )
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Row(
+                      children: const [
+                        Flexible(
+                            child: Text(
+                              "não possui uma conta?",
+                              style: TextStyle(
+                                color: Color(0xff6D6D6D),
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                        ),
+                        Flexible(
+                          child: Text(
+                              "cadastre-se",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
+                                decorationColor: Color(0xffF7C548),
+                                fontSize: 18,
+                                color: Color(0xffF7C548),
+                              )
+                          ),
+                        ),
+                      ]
+                  ),
+                ),
+              ],
               ),
-
           ),
-
-        )
+    )
     );
+
+
+
   }
 }

@@ -17,15 +17,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter 3.0.4 ',
       theme: ThemeData(
-        scaffoldBackgroundColor: lightScaffoldColor,
+        scaffoldBackgroundColor: mainColor,
         primaryColor: lightCardColor,
-        backgroundColor: lightBackgroundColor,
+        backgroundColor: mainColor,
         appBarTheme: AppBarTheme(
           iconTheme: IconThemeData(
             color: lightIconsColor,
           ),
 
-          backgroundColor: lightScaffoldColor,
+          backgroundColor: mainColor,
           centerTitle: true,
           titleTextStyle: TextStyle(
               color: lightTextColor, fontSize: 22, fontWeight: FontWeight.bold),
