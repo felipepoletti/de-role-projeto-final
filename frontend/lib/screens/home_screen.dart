@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:store_api_flutter_course/consts/global_colors.dart';
-
+import 'register_screen.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -32,10 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor:  Colors.white,
           resizeToAvoidBottomInset : false,
           body: Padding(
-              padding: const EdgeInsets.all(22.0),
+              padding: const EdgeInsets.all(18.0),
               child:Column(children: [
                 const SizedBox(
-                  height: 60,
+                  height: 20,
                 ),
                 Flexible(
                   child: Container(
@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child:  const Text(
                     "E-MAIL",
                     style: TextStyle(
-                        color: Color(0xffF7C548),
+                        color: Colors.black54,
                         fontWeight: FontWeight.bold,
                         fontSize: 18
                     ),
@@ -62,20 +62,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 8,
+                  height: 6,
                 ),
                 SizedBox(
-                  height: 80,
+                  height: 70,
                   child: TextField(
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide:  const BorderSide(width: 4, color: Color(0xffF7C548))
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide:  const BorderSide(width: 3, color: Color(0xffF7C548))
                         ),
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(width: 5, color: Color(0xffF7C548))
+                            borderSide: const BorderSide(width: 4, color: Color(0xffF7C548))
                         ),
                         hintText: "Digite seu email",
                         hintStyle: const TextStyle(fontSize: 16.00, fontWeight: FontWeight.bold,color: Color(0xffF7C548)),
@@ -90,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child:  Text(
                     "SENHA",
                     style: TextStyle(
-                        color: Color(0xffF7C548),
+                        color: Colors.black54,
                         fontWeight: FontWeight.bold,
                         fontSize: 18
                     ),
@@ -98,10 +98,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                 ),
                 const SizedBox(
-                  height: 8,
+                  height: 6,
                 ),
                 SizedBox(
-                  height: 80,
+                  height: 70,
                   child: TextField(
                       keyboardType: TextInputType.text,
                       obscureText: true,
@@ -109,12 +109,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       autocorrect: false,
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide:  const BorderSide(width: 4, color: Color(0xffF7C548))
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide:  const BorderSide(width: 3, color: Color(0xffF7C548))
                         ),
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(width: 5, color: Color(0xffF7C548))
+                            borderSide: const BorderSide(width: 4, color: Color(0xffF7C548))
                         ),
                         hintText: "Digite sua senha",
                         hintStyle: const TextStyle(fontSize: 16.00, fontWeight: FontWeight.bold,color: Color(0xffF7C548)),
@@ -124,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
                 Padding(
-                  padding: const EdgeInsets.only(top: 18),
+                  padding: const EdgeInsets.only(top: 16),
                   child: SizedBox(
                     width: double.infinity,
                     height: 50,
@@ -132,6 +132,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       onPressed: () { },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xffF7C548),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10), // <-- Radius
+                        ),
                       ),
                       child: const Text(
                         "ENTRAR",
@@ -160,11 +163,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 40),
+                  padding: const EdgeInsets.only(top: 60),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Flexible(
+                      children:  [
+                        const Flexible(
                           flex: 3,
                             child: Text(
                               "não possui uma conta?",
@@ -179,18 +182,25 @@ class _HomeScreenState extends State<HomeScreen> {
                         Flexible(
                           flex: 2,
                           child: Padding(
-                            padding: EdgeInsets.only(left: 8),
-                            child: Text(
-                                "cadastre-se",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  decoration: TextDecoration.underline,
-                                  decorationThickness: 2,
-                                  decorationColor: Color(0xffF7C548),
-                                  fontSize: 18,
-                                  color: Color(0xffF7C548),
-                                )
-                            ),
+                            padding: const EdgeInsets.only(left: 8),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(builder: (context) => const RegisterScreen())
+                                );
+                              },
+                              child: const Text(
+                                  "cadastre-se",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.underline,
+                                    decorationThickness: 2,
+                                    decorationColor: Color(0xffF7C548),
+                                    fontSize: 18,
+                                    color: Color(0xffF7C548),
+                                  )
+                              ),
+                            )
                           ),
                         ),
                       ]
