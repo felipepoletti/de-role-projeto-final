@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:store_api_flutter_course/consts/global_colors.dart';
 import 'register_screen.dart';
-
+import '../widgets/login_form.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -34,178 +34,12 @@ class _HomeScreenState extends State<HomeScreen> {
           body: Padding(
               padding: const EdgeInsets.all(18.0),
               child:Column(children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Flexible(
-                  child: Container(
-                      height: size.height * 0.3,
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/images/logo-reduzido.png"), fit: BoxFit.contain )
-                      )
-                  ),
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                Container(
-                  width: double.infinity,
-                  child:  const Text(
-                    "E-MAIL",
-                    style: TextStyle(
-                        color: Colors.black54,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-                const SizedBox(
-                  height: 6,
-                ),
-                SizedBox(
-                  height: 70,
-                  child: TextField(
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide:  const BorderSide(width: 3, color: Color(0xffF7C548))
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(width: 4, color: Color(0xffF7C548))
-                        ),
-                        hintText: "Digite seu email",
-                        hintStyle: const TextStyle(fontSize: 16.00, fontWeight: FontWeight.bold,color: Color(0xffF7C548)),
-                      )
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const SizedBox(
-                  width: double.infinity,
-                  child:  Text(
-                    "SENHA",
-                    style: TextStyle(
-                        color: Colors.black54,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18
-                    ),
-                    textAlign: TextAlign.left,
-                    ),
-                ),
-                const SizedBox(
-                  height: 6,
-                ),
-                SizedBox(
-                  height: 70,
-                  child: TextField(
-                      keyboardType: TextInputType.text,
-                      obscureText: true,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide:  const BorderSide(width: 3, color: Color(0xffF7C548))
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(width: 4, color: Color(0xffF7C548))
-                        ),
-                        hintText: "Digite sua senha",
-                        hintStyle: const TextStyle(fontSize: 16.00, fontWeight: FontWeight.bold,color: Color(0xffF7C548)),
-                      )
-                  ),
-                ),
-
-
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child:  ElevatedButton(
-                      onPressed: () { },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xffF7C548),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10), // <-- Radius
-                        ),
-                      ),
-                      child: const Text(
-                        "ENTRAR",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ) ,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: RichText(
-                      text: const TextSpan(
-                          text: "esqueci minha senha",
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            decorationColor: Color(0xffF7C548),
-                            decorationThickness: 2,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xffF7C548),
-                          )
-                      )
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 60),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children:  [
-                        const Flexible(
-                          flex: 3,
-                            child: Text(
-                              "não possui uma conta?",
-                              style: TextStyle(
-                                color: Color(0xff6D6D6D),
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                        ),
-
-                        Flexible(
-                          flex: 2,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(builder: (context) => const RegisterScreen())
-                                );
-                              },
-                              child: const Text(
-                                  "cadastre-se",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    decoration: TextDecoration.underline,
-                                    decorationThickness: 2,
-                                    decorationColor: Color(0xffF7C548),
-                                    fontSize: 18,
-                                    color: Color(0xffF7C548),
-                                  )
-                              ),
-                            )
-                          ),
-                        ),
-                      ]
-                  ),
-                ),
+                const SizedBox(height: 20),
+                buildFlexibleLogoHeader(size),
+                const SizedBox(height: 40),
+                LoginForm(),
+                buildForgetPassword(),
+                buildCreateAccount(context),
               ],
               ),
           ),
@@ -214,5 +48,82 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
+  }
+
+  Padding buildCreateAccount(BuildContext context) {
+    return Padding(
+                padding: const EdgeInsets.only(top: 60),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children:  [
+                      const Flexible(
+                        flex: 3,
+                          child: Text(
+                            "não possui uma conta?",
+                            style: TextStyle(
+                              color: Color(0xff6D6D6D),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                      ),
+                      Flexible(
+                        flex: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (context) => const RegisterScreen())
+                              );
+                            },
+                            child: const Text(
+                                "cadastre-se",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline,
+                                  decorationThickness: 2,
+                                  decorationColor: Color(0xffF7C548),
+                                  fontSize: 18,
+                                  color: Color(0xffF7C548),
+                                )
+                            ),
+                          )
+                        ),
+                      ),
+                    ]
+                ),
+              );
+  }
+
+  Flexible buildFlexibleLogoHeader(Size size) {
+    return Flexible(
+                child: Container(
+                    height: size.height * 0.3,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage("assets/images/logo-reduzido.png"), fit: BoxFit.contain )
+                    )
+                ),
+              );
+  }
+
+  Padding buildForgetPassword() {
+    return Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: RichText(
+                    text: const TextSpan(
+                        text: "esqueci minha senha",
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          decorationColor: Color(0xffF7C548),
+                          decorationThickness: 2,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xffF7C548),
+                        )
+                    )
+                ),
+              );
   }
 }
