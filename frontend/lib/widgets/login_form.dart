@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../controller/login_controller.dart';
+import 'package:store_api_flutter_course/screens/home_screen.dart';
 
-// Define a custom Form widget.
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
 
@@ -14,119 +13,190 @@ class LoginForm extends StatefulWidget {
 class LoginFormState extends State<LoginForm> {
 
   final _formKey = GlobalKey<FormState>();
-  final _loginController = LoginController();
- 
+  final TextEditingController loginEmailController = TextEditingController();
+  final TextEditingController loginPasswordController = TextEditingController();
+  final snackbarError =  const SnackBar(
+    content:  SizedBox(
+        height: 70,
+        child:  Text(
+            "Email e/ou senhas inválidos.",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 205))
+    ),
+    backgroundColor: Colors.red,
+    duration: Duration(seconds: 3),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
       child: Column(
         children: [
-          Container(
-            width: double.infinity,
-            child:  const Text(
-              "E-MAIL",
-              style: TextStyle(
-                  color: Colors.black54,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18
-              ),
-              textAlign: TextAlign.left,
-            ),
-          ),
+          buildEmailLabel(),
           const SizedBox(
             height: 6,
           ),
-          TextFormField(
-            controller: loginEmailController,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide:  const BorderSide(width: 3, color: Color(0xffF7C548))
-                ),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(width: 4, color: Color(0xffF7C548))
-                ),
-                hintText: "Digite seu email",
-                hintStyle: const TextStyle(fontSize: 16.00, fontWeight: FontWeight.bold,color: Color(0xffF7C548)),
-              )
-          ),
+          buildTextFormFieldEmail(),
+          const SizedBox(height: 20),
+          buildPasswordLabel(),
           const SizedBox(
-            width: double.infinity,
-            child:  Text(
-              "SENHA",
-              style: TextStyle(
-                  color: Colors.black54,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18
-              ),
-              textAlign: TextAlign.left,
-            ),
+            height: 6,
           ),
-          TextFormField(
-            obscureText: true,
-            controller: loginPasswordController,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide:  const BorderSide(width: 3, color: Color(0xffF7C548))
-                ),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(width: 4, color: Color(0xffF7C548))
-                ),
-                hintText: "Digite sua senha",
-                hintStyle: const TextStyle(fontSize: 16.00, fontWeight: FontWeight.bold,color: Color(0xffF7C548)),
-              )
+          buildTextFormFieldPassword(),
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: buildButtonLogin() ,
 
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 16),
-            child: SizedBox(
-              width: double.infinity,
-              height: 50,
-              child:  ElevatedButton(
-                onPressed: () => validateForm(),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffF7C548),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // <-- Radius
-                  ),
-                ),
-                child: const Text(
-                  "ENTRAR",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ) ,
-          ),
+
         ],
       ),
     );
   }
+
+  SizedBox buildPasswordLabel() {
+    return const SizedBox(
+          width: double.infinity,
+          child:  Text(
+            "SENHA",
+            style: TextStyle(
+                color: Colors.black54,
+                fontWeight: FontWeight.bold,
+                fontSize: 18
+            ),
+            textAlign: TextAlign.left,
+          ),
+        );
+  }
+
+  SizedBox buildEmailLabel() {
+    return const SizedBox(
+          width: double.infinity,
+          child:  Text(
+            "E-MAIL",
+            style: TextStyle(
+                color: Colors.black54,
+                fontWeight: FontWeight.bold,
+                fontSize: 18
+            ),
+            textAlign: TextAlign.left,
+          ),
+        );
+  }
+
+  SizedBox buildButtonLogin() {
+    return SizedBox(
+            width: double.infinity,
+            height: 50,
+            child:  ElevatedButton(
+              onPressed: () => validateForm(),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xffF7C548),
+
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10), // <-- Radius
+
+                ),
+
+              ),
+              child: const Text(
+                "ENTRAR",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          );
+  }
+
+  TextFormField buildTextFormFieldPassword() {
+    return TextFormField(
+          obscureText: true,
+          controller: loginPasswordController,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Campo senha não pode estar vazio.';
+            }
+            return null;
+          },
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide:  const BorderSide(width: 3, color: Color(0xffF7C548))
+              ),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(width: 4, color: Color(0xffF7C548))
+              ),
+              errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide:  const BorderSide(width: 3, color: Colors.red),
+
+              ),
+              border:  OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(width: 4, color: Color(0xffF7C548))
+              ),
+              errorStyle: const TextStyle(
+                  fontSize: 16.00,
+              ),
+              hintText: "Digite sua senha",
+              hintStyle: const TextStyle(fontSize: 16.00, color: Colors.black54),
+            )
+
+        );
+  }
+
+  TextFormField buildTextFormFieldEmail() {
+    return TextFormField(
+          controller: loginEmailController,
+          validator: (value) {
+            if (value == null || value.isEmpty || !value.contains('@') || !value.contains('.')) {
+              return 'Email inválido, digite novamente';
+            }
+            return null;
+          },
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide:  const BorderSide(width: 3, color: Color(0xffF7C548))
+              ),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(width: 4, color: Color(0xffF7C548))
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide:  const BorderSide(width: 3, color: Colors.red),
+
+              ),
+              border:  OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(width: 4, color: Color(0xffF7C548))
+              ),
+              errorStyle: const TextStyle(
+                fontSize: 16.00,
+
+              ),
+              hintText: "Digite seu email",
+              hintStyle: const TextStyle(fontSize: 16.00, color:  Colors.black54),
+            )
+        );
+  }
+
+
   void validateForm() {
     if (_formKey.currentState!.validate()) {
-
+      if( loginEmailController.text == "dev@seguros.com" && loginPasswordController.text == "dev123") {
+         Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomeScreen())
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(snackbarError);
+      }
     }
   }
 
 }
 
-final TextEditingController loginEmailController = TextEditingController();
-final TextEditingController loginPasswordController = TextEditingController();
