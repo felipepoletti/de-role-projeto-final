@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:store_api_flutter_course/screens/login_screen.dart';
+import 'package:store_api_flutter_course/widgets/login_form.dart';
+import '../widgets/register_form.dart';
 import 'home_screen.dart';
 
 class RegisterScreen extends StatefulWidget{
@@ -24,7 +27,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => const HomeScreen())
+                          MaterialPageRoute(builder: (context) => const LoginScreen())
                       );},
                     child: const Align(
                       alignment: Alignment.centerLeft,
@@ -64,17 +67,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
             ),
-            Container(
-              child:  Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: const [
-                    SizedBox(height: 15),
-                  ],
-                ),
-              ),
-            )
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: RegisterForm(),
+            ),
+
           ],
+
       ),
     );
   }
