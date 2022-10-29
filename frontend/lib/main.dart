@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:store_api_flutter_course/screens/login_screen.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'consts/global_colors.dart';
 import 'screens/home_screen.dart';
@@ -20,6 +21,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: const[
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: const [Locale('pt', 'BR')],
       debugShowCheckedModeBanner: false,
       title: 'Flutter 3.0.4 ',
       theme: ThemeData(
