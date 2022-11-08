@@ -47,30 +47,32 @@ class RegisterFormState extends State<RegisterForm> {
             const SizedBox(height: 20),
             buildPaddingInputFields(buildPasswordConfirmInput()),
             const SizedBox(height: 40),
-            SizedBox(
-              width: double.infinity,
-              height: 60,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor:const Color(0xffF7C548),
-                ),
-                child: const Align(
-                  alignment: Alignment.center,
-                  child: Text("SALVAR",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-
-
-                    ),
-                  ),
-                ),
-              ),
-            )
+            buildSaveRegistterBtn()
           ],
         ),
       );
+    }
+
+    SizedBox buildSaveRegistterBtn() {
+      return SizedBox(
+            width: double.infinity,
+            height: 60,
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor:const Color(0xffF7C548),
+              ),
+              child: const Align(
+                alignment: Alignment.center,
+                child: Text("SALVAR",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          );
     }
 
     Padding buildPaddingInputFields(SizedBox child) {
