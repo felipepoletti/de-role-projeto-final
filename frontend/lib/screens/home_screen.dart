@@ -35,40 +35,32 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(18.0),
               child:Column(children: [
                 Container(
-                    height: 50,
+                    height: 70,
                     decoration: const BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage("assets/images/logo-reduzido.png"), fit: BoxFit.contain )
                     )
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
                 buildInputSearchHome(),
-                RichText(
-                  text: const TextSpan(
-                    text: "filtrar",
-                    style: TextStyle(
-                      color: Color(0xff585252),
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold
-                    ),
-                    children: [
-                      WidgetSpan(child: Icon(
-                         IconlyBold.filter
-                      ),
-                      ),
-                    ]
-                  ),
-                ),
+                const SizedBox(height: 20),
+                buildFilterBtn(),
+                const SizedBox(height: 30),
                 const Text(
                   "Eventos mais curtidos por categoria",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Color(0xff585252)
                   ),
                 ),
-                const Text(
-                  "Música"
-                ),
-               CardEventsHome(),
+                const SizedBox(height: 28),
+                buildTitleCardHome("Música"),
+                CardEventsHome(),
+                SizedBox(height: 38),
+                buildTitleCardHome("Teatro"),
+                CardEventsHome(),
+
 
               ],
               ),
@@ -77,6 +69,52 @@ class _HomeScreenState extends State<HomeScreen> {
     )
     );
 
+  }
+
+  Align buildTitleCardHome(String title) {
+    return  Align(
+                alignment: Alignment.centerLeft,
+                child: SizedBox(
+                  height: 34,
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff585252)
+                    ),
+                  ),
+                )
+              );
+  }
+
+  RichText buildFilterBtn() {
+    return RichText(
+                text: const TextSpan(
+                  text: "filtrar",
+                  style: TextStyle(
+                    color: Color(0xff585252),
+                    fontSize: 23,
+                    fontWeight: FontWeight.bold
+                  ),
+                  children: [
+
+                    WidgetSpan(
+                      child: Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: SizedBox(
+                            height: 28,
+                            child: Icon(
+                                IconlyBold.filter,
+                                color: Color(0xff585252),
+                                size: 30
+                            ),
+                          )
+                      ),
+                    ),
+                  ]
+                ),
+              );
   }
 
   SizedBox buildInputSearchHome() {
