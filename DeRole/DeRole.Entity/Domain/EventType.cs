@@ -6,6 +6,7 @@ namespace DeRole.Entity.Domain
     {
         public int EventTypeId { get; set; }
         public string EventTypeName { get; set; }
+        public Event Event { get; set; }
 
         public EventType(string eventTypeName)
         {
