@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DeRole.Data\DeRole.Data.csproj" />
     <ProjectReference Include="..\DeRole.Entity\DeRole.Entity.csproj" />
     <ProjectReference Include="..\DeRole.Services\DeRole.Services.csproj" />

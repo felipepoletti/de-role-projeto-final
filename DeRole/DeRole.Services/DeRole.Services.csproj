@@ -7,7 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DeRole.Data\DeRole.Data.csproj" />
     <ProjectReference Include="..\DeRole.Entity\DeRole.Entity.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <PackageReference Include="FluentValidation" Version="11.2.2" />
   </ItemGroup>
 
 </Project>

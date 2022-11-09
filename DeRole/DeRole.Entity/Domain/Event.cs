@@ -18,7 +18,8 @@ namespace DeRole.Entity.Domain
         public int EventTypeId { get; private set; }
 
         public User User { get; private set; }
-        public EventType EventType { get; private set; }
+        public EventType EventType { get; set; }
+        public ICollection<Like> Likes { get; set; }
 
         public Event(string eventName,
             decimal price, string eventDescription,
@@ -27,7 +28,12 @@ namespace DeRole.Entity.Domain
             string? addressComplement,
             int userId, int eventTypeId)
         {
-            Validation(eventName, price, eventDescription, date, address, addressNumber, addressComplement, eventTypeId, userId);
+            Validation(eventName, price, 
+                eventDescription, date, 
+                address, addressNumber,
+                addressComplement, eventTypeId, userId);
+
+            Likes = new List<Like>();
         }
 
         public Event(int id, string eventName, 
