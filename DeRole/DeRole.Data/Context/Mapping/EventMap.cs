@@ -44,9 +44,6 @@ namespace DeRole.Data.Context.Mapping
 
             builder.HasOne(e => e.User)
                 .WithMany(t => t.Events);
-
-            builder.HasOne(e => e.EventType)
-                .WithOne(t => t.Event);
         }
     }
 }

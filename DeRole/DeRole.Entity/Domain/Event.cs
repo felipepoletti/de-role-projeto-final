@@ -8,7 +8,7 @@ namespace DeRole.Entity.Domain
     {
         public int Id { get; private set; }
         public string EventName { get; private set; }
-        public decimal? Price { get; private set; }
+        public decimal Price { get; private set; }
         public string EventDescription { get; private set; }
         public DateTime Date { get; private set; }
         public string Address { get; private set; }
@@ -18,7 +18,6 @@ namespace DeRole.Entity.Domain
         public int EventTypeId { get; private set; }
 
         public User User { get; private set; }
-        public EventType EventType { get; set; }
         public ICollection<Like> Likes { get; set; }
 
         public Event(string eventName,

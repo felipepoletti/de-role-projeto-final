@@ -1,6 +1,6 @@
 ﻿using DeRole.Data.Context;
 using DeRole.Entity.Domain;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace DeRole.Data.Repositories.EventsRepository
 {

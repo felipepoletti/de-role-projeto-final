@@ -16,7 +16,7 @@ namespace DeRole.DependencyInjection
             IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options => options
-            .UseMySQL(configuration.GetConnectionString("")));
+            .UseNpgsql(configuration.GetConnectionString("Default")));
 
             services.AddScoped<IUserRepository, UserRepository>();
 
