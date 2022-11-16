@@ -8,6 +8,8 @@ namespace DeRole.Services.DTOs.Validations
         public DtoToDomainMap()
         {
             CreateMap<UserDto, User>();
+
+            CreateMap<EventDto, Event>();
         }
     }
 }

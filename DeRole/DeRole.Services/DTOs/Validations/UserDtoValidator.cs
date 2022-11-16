@@ -7,9 +7,9 @@ namespace DeRole.Services.DTOs.Validations
         public UserDtoValidator()
         {
             RuleFor(x => x.Name)
-            .NotEmpty()
-            .NotNull()
-            .WithMessage("Nome deve ser informado!");
+                .NotEmpty()
+                .NotNull()
+                .WithMessage("Nome deve ser informado!");
 
             RuleFor(x => x.Email)
                 .NotEmpty()

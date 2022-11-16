@@ -6,19 +6,19 @@ namespace DeRole.Api.Controllers
 {
     [ApiController]
     [Route("derole/[controller]")]
-    public class UserController : ControllerBase
+    public class EventController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IEventService _eventService;
 
-        public UserController(IUserService userService)
+        public EventController(IEventService eventService)
         {
-            _userService = userService;
+            _eventService = eventService;
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] UserDto userDto)
+        public async Task<ActionResult> Post([FromBody] EventDto eventDto)
         {
-            var result = await _userService.CreateAsync(userDto);
+            var result = await _eventService.CreateAsync(eventDto);
 
             if (result.IsSuccess)
                 return Ok(result);

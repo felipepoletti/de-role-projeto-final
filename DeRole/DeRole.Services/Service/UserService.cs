@@ -3,10 +3,9 @@ using DeRole.Data.Repositories.UsersRepository;
 using DeRole.Entity.Domain;
 using DeRole.Services.DTOs;
 using DeRole.Services.DTOs.Validations;
-using DeRole.Services.Service;
 using DeRole.Services.Service.Interfaces;
 
-namespace DeRole.Services
+namespace DeRole.Services.Service
 {
     public class UserService : IUserService
     {

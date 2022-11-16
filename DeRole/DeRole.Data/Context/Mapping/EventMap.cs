@@ -8,39 +8,40 @@ namespace DeRole.Data.Context.Mapping
     {
         public void Configure(EntityTypeBuilder<Event> builder) 
         {
-            builder.ToTable("EVENTO");
+            builder.ToTable("event");
 
             builder.HasKey(e => e.Id);
 
             builder.Property(e => e.Id)
-                .HasColumnName("EVENTO_ID");
+                .HasColumnName("evento_id")
+                .UseIdentityColumn();
 
             builder.Property(e => e.EventName)
-                .HasColumnName("EVENTO_NAME");
+                .HasColumnName("evento_name");
 
             builder.Property(e => e.Price)
-                .HasColumnName("EVENTO_PRECO");
+                .HasColumnName("evento_preco");
 
             builder.Property(e => e.EventDescription)
-                .HasColumnName("EVENTO_DESCRICAO");
+                .HasColumnName("evento_descricao");
 
             builder.Property(e => e.Date)
-                .HasColumnName("EVENTO_DATA");
+                .HasColumnName("evento_data");
 
             builder.Property(e => e.Address)
-                .HasColumnName("EVENTO_ENDERECO");
+                .HasColumnName("evento_endereco");
 
             builder.Property(e => e.AddressNumber)
-                .HasColumnName("EVENTO_ENDERECO_NUMERO");
+                .HasColumnName("evento_endereco_numero");
 
             builder.Property(e => e.AddressComplement)
-                .HasColumnName("EVENTO_ENDERECO_COMPLEMENTO");
+                .HasColumnName("evento_endereco_complemento");
 
             builder.Property(e => e.EventTypeId)
-                .HasColumnName("TIPO_EVENTO_ID");
+                .HasColumnName("tipo_evento_id");
 
             builder.Property(e => e.UserId)
-                .HasColumnName("PESSOA_ID");
+                .HasColumnName("pessoa_id");
 
             builder.HasOne(e => e.User)
                 .WithMany(t => t.Events);
