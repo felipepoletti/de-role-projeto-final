@@ -10,8 +10,8 @@ namespace DeRole.Entity.Domain
         public int Id { get; private set; }
         public int EventId { get; private set; }
         public int UserId { get; private set; }
-        public Event Event { get; private set; }
-        public User User { get; private set; }
+        public Event Event { get; set; }
+        public User User { get; set; }
 
         public Like(int eventId, int userId)
         {

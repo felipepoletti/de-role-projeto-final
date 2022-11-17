@@ -9,12 +9,14 @@ namespace DeRole.Entity.Domain
         public DateTime BirthDate { get; private set; }
         public string Email { get; private set; }
         public string Password { get; private set; }
-        public ICollection<Event> Events { get; private set; }   
-        public ICollection<Like> Likes { get; private set; }   
+        public ICollection<Event> Events { get; set; }   
+        public ICollection<Like> Likes { get; set; }   
 
         public User(string name, DateTime birthDate, string email, string password)
         {
             Validation(name, email, password, birthDate);
+            Events = new List<Event>();
+            Likes = new List<Like>();
         }
 
         public User(int id, string name, DateTime birthDate, string email, string password)
@@ -23,6 +25,8 @@ namespace DeRole.Entity.Domain
             Id = id;
 
             Validation(name, email, password, birthDate);
+            Events = new List<Event>();
+            Likes = new List<Like>();
         }
 
         private void Validation(string name, string email, string password, DateTime? birthDate)
