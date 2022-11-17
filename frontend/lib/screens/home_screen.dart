@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:store_api_flutter_course/screens/event_description_screen.dart';
 import 'package:store_api_flutter_course/widgets/card_events_home.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -28,45 +29,73 @@ class _HomeScreenState extends State<HomeScreen> {
     return GestureDetector(
         onTap: () {FocusScope.of(context).unfocus();
           },
-      child: Scaffold(
-          backgroundColor:  Colors.white,
-          resizeToAvoidBottomInset : false,
-          body: Padding(
-              padding: const EdgeInsets.all(18.0),
-              child:Column(children: [
-                Container(
-                    height: 70,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage("assets/images/logo-reduzido.png"), fit: BoxFit.contain )
-                    )
-                ),
-                const SizedBox(height: 30),
-                buildInputSearchHome(),
-                const SizedBox(height: 20),
-                buildFilterBtn(),
-                const SizedBox(height: 30),
-                const Text(
-                  "Eventos mais curtidos por categoria",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    color: Color(0xff585252)
-                  ),
-                ),
-                const SizedBox(height: 28),
-                buildTitleCardHome("Música"),
-                CardEventsHome(),
-                SizedBox(height: 38),
-                buildTitleCardHome("Teatro"),
-                CardEventsHome(),
+        child: Scaffold(
+              backgroundColor:  Colors.white,
+              resizeToAvoidBottomInset : false,
+              body: Container(
+                padding: const EdgeInsets.all(18.0),
+                child: ListView(
+                  children: [
+                    Container(
+                        height: 70,
+                        decoration: const BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage("assets/images/logo-reduzido.png"), fit: BoxFit.contain )
+                        )
+                    ),
+                    const SizedBox(height: 30),
 
+                    buildInputSearchHome(),
+                    const SizedBox(height: 20),
+                    buildFilterBtn(),
+                    const SizedBox(height: 30),
+                    const Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Eventos mais curtidos por categoria",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Color(0xff585252)
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 28),
+                    buildTitleCardHome("Música"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) => const EventDescriptionScreen())
+                        );
+                      },
+                      child: CardEventsHome(),
+                    ),
 
-              ],
+                    const SizedBox(height: 38),
+                    buildTitleCardHome("Teatro"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) => const EventDescriptionScreen())
+                        );
+                      },
+                      child: CardEventsHome(),
+                    ),
+                    const SizedBox(height: 38),
+                    buildTitleCardHome("Exposição"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) => const EventDescriptionScreen())
+                        );
+                      },
+                      child: CardEventsHome(),
+                    ),
+                  ],
+                ),
               ),
-          ),
-        bottomNavigationBar: buildBottomNavigationBar() ,
-    )
+          bottomNavigationBar: buildBottomNavigationBar() ,
+        )
     );
 
   }
@@ -88,33 +117,36 @@ class _HomeScreenState extends State<HomeScreen> {
               );
   }
 
-  RichText buildFilterBtn() {
-    return RichText(
-                text: const TextSpan(
-                  text: "filtrar",
-                  style: TextStyle(
-                    color: Color(0xff585252),
-                    fontSize: 23,
-                    fontWeight: FontWeight.bold
-                  ),
-                  children: [
+  Align buildFilterBtn() {
+    return Align(
+      alignment: Alignment.center,
+      child: RichText(
+        text: const TextSpan(
+            text: "filtrar",
+            style: TextStyle(
+                color: Color(0xff585252),
+                fontSize: 23,
+                fontWeight: FontWeight.bold
+            ),
+            children: [
 
-                    WidgetSpan(
-                      child: Padding(
-                          padding: EdgeInsets.only(left: 10),
-                          child: SizedBox(
-                            height: 28,
-                            child: Icon(
-                                IconlyBold.filter,
-                                color: Color(0xff585252),
-                                size: 30
-                            ),
-                          )
+              WidgetSpan(
+                child: Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: SizedBox(
+                      height: 28,
+                      child: Icon(
+                          IconlyBold.filter,
+                          color: Color(0xff585252),
+                          size: 30
                       ),
-                    ),
-                  ]
+                    )
                 ),
-              );
+              ),
+            ]
+        ),
+      )
+    );
   }
 
   SizedBox buildInputSearchHome() {
