@@ -15,7 +15,6 @@ namespace DeRole.Entity.Domain
         public int UserId { get; private set; }
         public int EventTypeId { get; private set; }
 
-        public ICollection<Like> Likes { get; set; }
         public User User { get; set; }
 
         public Event(string eventName,
@@ -29,8 +28,6 @@ namespace DeRole.Entity.Domain
                 eventDescription, date, 
                 address, addressNumber,
                 addressComplement, eventTypeId, userId);
-
-            Likes = new List<Like>();
         }
 
         public Event(int id, string eventName, 
