@@ -20,11 +20,6 @@ namespace DeRole.Services.DTOs.Validations
                 .NotEmpty()
                 .NotNull()
                 .WithMessage("Senha deve ser informada!");
-
-            RuleFor(x => x.BirthDate)
-                .NotEmpty()
-                .NotNull()
-                .WithMessage("Data de nascimento deve ser informada!");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DeRole.Data.Context;
+using DeRole.Data.Repositories.DesignPattern;
 using DeRole.Data.Repositories.EventsRepository;
 using DeRole.Data.Repositories.UsersRepository;
 using DeRole.Services.Mappings;
@@ -21,6 +22,7 @@ namespace DeRole.DependencyInjection
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }

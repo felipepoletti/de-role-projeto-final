@@ -1,7 +1,4 @@
-﻿
-
-using DeRole.Entity.Validations;
-using System.Xml.Linq;
+﻿using DeRole.Entity.Validations;
 
 namespace DeRole.Entity.Domain
 {

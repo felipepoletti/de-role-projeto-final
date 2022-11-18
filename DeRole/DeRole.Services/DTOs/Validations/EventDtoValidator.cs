@@ -10,11 +10,6 @@ namespace DeRole.Services.DTOs.Validations
                 .NotEmpty()
                 .NotNull()
                 .WithMessage("Nome do evento deve ser informado!");
-            
-            RuleFor(x => x.Price)
-                .NotEmpty()
-                .NotNull()
-                .WithMessage("O preço deve ser informado!");
 
             RuleFor(x => x.EventDescription)
                 .NotEmpty()

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DeRole.Data.Repositories.DesignPattern;
 using DeRole.Data.Repositories.EventsRepository;
 using DeRole.Entity.Domain;
 using DeRole.Services.DTOs;
@@ -11,11 +12,13 @@ namespace DeRole.Services.Service
     {
         private readonly IEventRepository _eventRepository;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public EventService(IEventRepository eventRepository, IMapper mapper)
+        public EventService(IEventRepository eventRepository, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _eventRepository = eventRepository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<ResultService<EventDto>> CreateAsync(EventDto eventDto)
@@ -27,11 +30,22 @@ namespace DeRole.Services.Service
 
             if (!result.IsValid)
                 return ResultService.RequestError<EventDto>("Não foi possível validar o objeto.", result);
+            try
+            {
+                await _unitOfWork.BeginTransaction();
 
-            var events = _mapper.Map<Event>(eventDto);
-            var data = await _eventRepository.CreateAsync(events);
+                var events = _mapper.Map<Event>(eventDto);
+                var data = await _eventRepository.CreateAsync(events);
 
-            return ResultService.Ok<EventDto>(_mapper.Map<EventDto>(data));
+                await _unitOfWork.CommitTransaction();
+
+                return ResultService.Ok<EventDto>(_mapper.Map<EventDto>(data));
+            }
+            catch (Exception ex)
+            {
+                await _unitOfWork.RollbackTransaction();
+                return ResultService.Fail<EventDto>($"Erro: {ex.Message}");
+            }            
         }
 
         public async Task<ResultService> DeleteEventAsync(int id)

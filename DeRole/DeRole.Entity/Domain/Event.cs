@@ -1,6 +1,4 @@
 ﻿using DeRole.Entity.Validations;
-using System.ComponentModel;
-using System.Reflection.Metadata;
 
 namespace DeRole.Entity.Domain
 {
@@ -52,7 +50,6 @@ namespace DeRole.Entity.Domain
         {
             EntityValidationException.When(string.IsNullOrEmpty(eventName), "O nome do evento deve ser informado.");
             EntityValidationException.When(string.IsNullOrEmpty(eventDescription), "O nome do evento deve ser informado.");
-            EntityValidationException.When(price < 0, "O preço deve ser informado.");
             EntityValidationException.When(!date.HasValue, "A data deve ser informada.");
             EntityValidationException.When(string.IsNullOrEmpty(address), "O número endereço deve ser informado.");
             EntityValidationException.When(string.IsNullOrEmpty(addressNumber), "O número endereço deve ser informado.");
