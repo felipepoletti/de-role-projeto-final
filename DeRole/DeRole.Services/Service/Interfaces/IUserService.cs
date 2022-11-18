@@ -9,5 +9,6 @@ namespace DeRole.Services.Service.Interfaces
         Task<ResultService<UserDto>> GetUsersByIdAsync(int id);
         Task<ResultService> UpdateUserAsync(UserDto userDto);
         Task<ResultService> DeleteUserAsync(int id);
+        Task<ResultService<dynamic>> GenerateTokenAsync(string email, string senha);
     }
 }

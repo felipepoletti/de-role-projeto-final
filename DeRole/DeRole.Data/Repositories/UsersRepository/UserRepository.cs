@@ -40,6 +40,11 @@ namespace DeRole.Data.Repositories.UsersRepository
         {
             _applicationDbContext.Update(users);
             await _applicationDbContext.SaveChangesAsync();
-        }    
+        }
+
+        public async Task<User> GetUserByEmailAndPasswordAssync(string email, string password)
+        {
+            return await _applicationDbContext.Users.FirstOrDefaultAsync(x => x.Email == email && x.Password == password);
+        }
     }
 }

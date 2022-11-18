@@ -9,5 +9,6 @@ namespace DeRole.Data.Repositories.UsersRepository
         Task<User> CreateAsync(User users);
         Task EditAsync(User users);
         Task DeleteAsync(User users);
+        Task<User> GetUserByEmailAndPasswordAssync(string email, string password);
     }
 }

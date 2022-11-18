@@ -1,20 +1,24 @@
 ﻿using AutoMapper;
+using DeRole.Data.Authentication;
 using DeRole.Data.Repositories.UsersRepository;
 using DeRole.Entity.Domain;
 using DeRole.Services.DTOs;
 using DeRole.Services.DTOs.Validations;
 using DeRole.Services.Service.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace DeRole.Services.Service
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly ITokenGenerator _tokenGenerator;
         private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        public UserService(IUserRepository userRepository, ITokenGenerator tokenGenerator, IMapper mapper)
         {
             _userRepository = userRepository;
+            _tokenGenerator = tokenGenerator;
             _mapper = mapper;
         }
 
@@ -43,6 +47,19 @@ namespace DeRole.Services.Service
 
             await _userRepository.DeleteAsync(user);
             return ResultService.Ok("Usuário deletado.");
+        }
+
+        public async Task<ResultService<dynamic>> GenerateTokenAsync(string email, string senha)
+        {
+            if (email == null || senha == null)
+                return ResultService.Fail<dynamic>("Usuário ou senha devem ser informado.");
+
+            var user = await _userRepository.GetUserByEmailAndPasswordAssync(email, senha);
+
+            if (user == null)
+                return ResultService.Fail<dynamic>("Usuário ou senha inválidos");
+
+            return ResultService.Ok(_tokenGenerator.Generator(user));
         }
 
         public async Task<ResultService<ICollection<UserDto>>> GetUsersAsync()

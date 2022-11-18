@@ -1,10 +1,11 @@
 ﻿using DeRole.Services.DTOs;
-using DeRole.Services.Service;
 using DeRole.Services.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeRole.Api.Controllers
 {
+    //[Authorize]
     [ApiController]
     [Route("derole/[controller]")]
     public class EventController : ControllerBase

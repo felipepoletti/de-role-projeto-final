@@ -5,7 +5,7 @@ namespace DeRole.Entity.Domain
     public sealed class User
     {
         public int Id { get; private set; }
-        public string Name { get; private set; }
+        public string? Name { get; private set; }
         public string Email { get; private set; }
         public string Password { get; private set; }
         public ICollection<Event> Events { get; set; }
@@ -26,7 +26,6 @@ namespace DeRole.Entity.Domain
 
         private void Validation(string name, string email, string password)
         {
-            EntityValidationException.When(string.IsNullOrEmpty(name), "Nome deve ser informado");
             EntityValidationException.When(string.IsNullOrEmpty(email), "E-mail deve ser informado");
             EntityValidationException.When(string.IsNullOrEmpty(password), "Senha deve ser informada");
 
