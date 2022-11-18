@@ -33,5 +33,43 @@ namespace DeRole.Services.Service
 
             return ResultService.Ok<EventDto>(_mapper.Map<EventDto>(data));
         }
+
+        public async Task<ResultService> DeleteEventAsync(int id)
+        {
+            var eventToDelete = await _eventRepository.GetEventById(id);
+
+            if (eventToDelete == null)
+                return ResultService.Fail("Evento não encontrado!");
+
+            await _eventRepository.DeleteAsync(eventToDelete);
+            return ResultService.Ok("Evento deletado.");
+        }
+
+        public async Task<ResultService<ICollection<EventDto>>> GetEventsAsync()
+        {
+            var events = await _eventRepository.GetAllEventsAsync();
+            return ResultService.Ok<ICollection<EventDto>>(_mapper.Map<ICollection<EventDto>>(events));
+        }
+
+        public async Task<ResultService> UpdateEventAsync(EventDto eventDto)
+        {
+            if (eventDto == null)
+                return ResultService.Fail("O evento deve ser informado.");
+
+            var validation = new EventDtoValidator().Validate(eventDto);
+
+            if (!validation.IsValid)
+                return ResultService.RequestError("Erro ao validar os campos.", validation);
+
+            var eventToUpdate = await _eventRepository.GetEventById(eventDto.Id);
+
+            if (eventToUpdate == null)
+                return ResultService.Fail("Evento não encontrado");
+
+            eventToUpdate = _mapper.Map<EventDto, Event>(eventDto, eventToUpdate);
+            await _eventRepository.EditAsync(eventToUpdate);
+
+            return ResultService.Ok("Usuário editado!");
+        }
     }
 }

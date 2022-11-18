@@ -6,9 +6,9 @@ namespace DeRole.Data.Context.Mapping
 {
     public class EventMap : IEntityTypeConfiguration<Event>
     {
-        public void Configure(EntityTypeBuilder<Event> builder) 
+        public void Configure(EntityTypeBuilder<Event> builder)
         {
-            builder.ToTable("event");
+            builder.ToTable("evento");
 
             builder.HasKey(e => e.Id);
 
@@ -41,10 +41,11 @@ namespace DeRole.Data.Context.Mapping
                 .HasColumnName("tipo_evento_id");
 
             builder.Property(e => e.UserId)
-                .HasColumnName("pessoa_id");
+                .HasColumnName("usuario_id");
 
             builder.HasOne(e => e.User)
-                .WithMany(t => t.Events);
+                .WithMany(t => t.Events)
+                .HasForeignKey(e => e.UserId);
         }
     }
 }

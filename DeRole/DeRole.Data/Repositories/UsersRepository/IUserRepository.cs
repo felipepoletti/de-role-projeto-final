@@ -4,8 +4,10 @@ namespace DeRole.Data.Repositories.UsersRepository
 {
     public interface IUserRepository
     {
+        Task<ICollection<User>> GetAllUsersAsync();
+        Task<User> GetUserByIdAsync(int id);
         Task<User> CreateAsync(User users);
         Task EditAsync(User users);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(User users);
     }
 }

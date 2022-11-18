@@ -27,6 +27,9 @@ namespace DeRole.Data.Context.Mapping
 
             builder.Property(u => u.Password)
                 .HasColumnName("usuario_senha");
+
+            builder.HasMany(u => u.Events)
+                .WithOne(x => x.User);
         }
     }
 }

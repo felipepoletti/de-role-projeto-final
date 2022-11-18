@@ -1,5 +1,6 @@
 ﻿using DeRole.Data.Context;
 using DeRole.Entity.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace DeRole.Data.Repositories.UsersRepository
 {
@@ -12,6 +13,16 @@ namespace DeRole.Data.Repositories.UsersRepository
             _applicationDbContext = applicationDbContext;
         }
 
+        public async Task<ICollection<User>> GetAllUsersAsync()
+        {
+            return await _applicationDbContext.Users.ToListAsync();
+        }
+
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            return await _applicationDbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public async Task<User> CreateAsync(User users)
         {
             _applicationDbContext.Add(users);
@@ -19,9 +30,9 @@ namespace DeRole.Data.Repositories.UsersRepository
             return users;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(User users)
         {
-            _applicationDbContext.Remove(id);
+            _applicationDbContext.Remove(users);
             await _applicationDbContext.SaveChangesAsync();
         }
 
@@ -29,6 +40,6 @@ namespace DeRole.Data.Repositories.UsersRepository
         {
             _applicationDbContext.Update(users);
             await _applicationDbContext.SaveChangesAsync();
-        }
+        }    
     }
 }

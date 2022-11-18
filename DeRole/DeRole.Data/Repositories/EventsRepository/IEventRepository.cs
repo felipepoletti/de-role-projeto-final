@@ -6,8 +6,9 @@ namespace DeRole.Data.Repositories.EventsRepository
     {
         Task<Event> CreateAsync(Event events);
         Task<ICollection<Event>> GetAllEventsAsync();
-        Task<ICollection<Event>> GetAllEventsByFilterAsync();
+        Task<ICollection<Event>> GetEventsByFilterAsync();
+        Task<Event> GetEventById(int id);
         Task EditAsync(Event events);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(Event eventToDelete);
     }
 }

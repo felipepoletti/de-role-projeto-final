@@ -9,7 +9,7 @@ namespace DeRole.Services.Mappings
         public DomainToDtoMap()
         {
             CreateMap<User, UserDto>();
-            CreateMap<Event, UserDto>();
+            CreateMap<Event, EventDto>();
         }
     }
 }
