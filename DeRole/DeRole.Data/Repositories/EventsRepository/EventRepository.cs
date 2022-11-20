@@ -20,9 +20,9 @@ namespace DeRole.Data.Repositories.EventsRepository
             return events;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Event eventToDelete)
         {
-            _applicationDbContext.Remove(id);
+            _applicationDbContext.Remove(eventToDelete);
             await _applicationDbContext.SaveChangesAsync();
         }
 
@@ -37,7 +37,12 @@ namespace DeRole.Data.Repositories.EventsRepository
             return await _applicationDbContext.Events.ToListAsync();
         }
 
-        public Task<ICollection<Event>> GetAllEventsByFilterAsync()
+        public async Task<Event> GetEventByIdAsync(int id)
+        {
+            return await _applicationDbContext.Events.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public Task<ICollection<Event>> GetEventsByFilterAsync()
         {
             throw new NotImplementedException();
         }

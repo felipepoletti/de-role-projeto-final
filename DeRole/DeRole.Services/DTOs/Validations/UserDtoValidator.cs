@@ -6,11 +6,6 @@ namespace DeRole.Services.DTOs.Validations
     {
         public UserDtoValidator()
         {
-            RuleFor(x => x.Name)
-                .NotEmpty()
-                .NotNull()
-                .WithMessage("Nome deve ser informado!");
-
             RuleFor(x => x.Email)
                 .NotEmpty()
                 .NotNull()
@@ -20,11 +15,6 @@ namespace DeRole.Services.DTOs.Validations
                 .NotEmpty()
                 .NotNull()
                 .WithMessage("Senha deve ser informada!");
-
-            RuleFor(x => x.BirthDate)
-                .NotEmpty()
-                .NotNull()
-                .WithMessage("Data de nascimento deve ser informada!");
         }
     }
 }

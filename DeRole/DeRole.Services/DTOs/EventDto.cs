@@ -2,15 +2,15 @@
 {
     public class EventDto
     {
-        public int Id { get; private set; }
-        public string EventName { get; private set; }
-        public decimal Price { get; private set; }
-        public string EventDescription { get; private set; }
-        public DateTime Date { get; private set; }
-        public string Address { get; private set; }
-        public string AddressNumber { get; private set; }
-        public string? AddressComplement { get; private set; }
-        public int UserId { get; private set; }
-        public int EventTypeId { get; private set; }
+        public int Id { get; set; }
+        public string EventName { get; set; }
+        public decimal Price { get; set; }
+        public string EventDescription { get; set; }
+        public DateTime Date { get; set; }
+        public string Address { get; set; }
+        public string AddressNumber { get; set; }
+        public string? AddressComplement { get; set; }
+        public int UserId { get; set; }
+        public int EventTypeId { get; set; }
     }
 }

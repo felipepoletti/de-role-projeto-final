@@ -1,6 +1,4 @@
 ﻿using DeRole.Entity.Validations;
-using System.ComponentModel;
-using System.Reflection.Metadata;
 
 namespace DeRole.Entity.Domain
 {
@@ -17,8 +15,7 @@ namespace DeRole.Entity.Domain
         public int UserId { get; private set; }
         public int EventTypeId { get; private set; }
 
-        public User User { get; private set; }
-        public ICollection<Like> Likes { get; set; }
+        public User User { get; set; }
 
         public Event(string eventName,
             decimal price, string eventDescription,
@@ -31,8 +28,6 @@ namespace DeRole.Entity.Domain
                 eventDescription, date, 
                 address, addressNumber,
                 addressComplement, eventTypeId, userId);
-
-            Likes = new List<Like>();
         }
 
         public Event(int id, string eventName, 
@@ -48,18 +43,26 @@ namespace DeRole.Entity.Domain
             Validation(eventName, price, eventDescription, date, address, addressNumber, addressComplement, eventTypeId, userId);
         }
 
-        public void Validation(string eventName, decimal? price, string eventDescription, DateTime? date, string address, string addressNumber, string? addressComplement, int eventTypeId, int userId)
+        public void Validation(string eventName, decimal price, string eventDescription, DateTime? date, string address, string addressNumber, string? addressComplement, int eventTypeId, int userId)
         {
             EntityValidationException.When(string.IsNullOrEmpty(eventName), "O nome do evento deve ser informado.");
             EntityValidationException.When(string.IsNullOrEmpty(eventDescription), "O nome do evento deve ser informado.");
-            EntityValidationException.When(price < 0, "O preço deve ser informado.");
-            EntityValidationException.When(date.HasValue, "A data endereço deve ser informado.");
+            EntityValidationException.When(!date.HasValue, "A data deve ser informada.");
             EntityValidationException.When(string.IsNullOrEmpty(address), "O número endereço deve ser informado.");
             EntityValidationException.When(string.IsNullOrEmpty(addressNumber), "O número endereço deve ser informado.");
             EntityValidationException.When(string.IsNullOrEmpty(addressComplement), "O complemento endereço deve ser informado.");
             EntityValidationException.When(eventTypeId < 0 , "O tipo do evento deve ser informado.");
             EntityValidationException.When(userId < 0 , "O usuário deve ser informado.");
 
+            EventName = eventName;
+            EventDescription = eventDescription;
+            Price = price;
+            Date = Date;
+            Address = address;
+            AddressNumber = addressNumber;
+            AddressComplement = addressComplement;
+            EventTypeId = eventTypeId;
+            UserId = userId;
         }
     }
 }
