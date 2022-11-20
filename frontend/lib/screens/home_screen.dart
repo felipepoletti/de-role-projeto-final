@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:store_api_flutter_course/screens/create_event_screen.dart';
 import 'package:store_api_flutter_course/screens/event_description_screen.dart';
 import 'package:store_api_flutter_course/widgets/card_events_home.dart';
 class HomeScreen extends StatefulWidget {
@@ -177,6 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return BottomNavigationBar(
         currentIndex: 0,
         type: BottomNavigationBarType.fixed,
+        onTap: _onTap,
         selectedItemColor: const Color(0xffF7C548),
         items: const [
           BottomNavigationBarItem(
@@ -184,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
               label: ""
           ),
           BottomNavigationBarItem(
-              icon: Icon(IconlyBold.upload),
+              icon: Icon(IconlyBold.addUser),
               label: ""
           ),
           BottomNavigationBarItem(
@@ -194,6 +196,16 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
 
       );
+  }
+  _onTap(int tabIndex) {
+    switch (tabIndex) {
+      case 1:
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const CreateEventScreen())
+        );
+        break;
+    }
+
   }
 
 }

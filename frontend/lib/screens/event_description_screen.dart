@@ -83,7 +83,7 @@ class _EventDescriptionScreenState extends State<EventDescriptionScreen> {
             buildWrappCategoriesBox(),
             const SizedBox(height: 30),
             Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 25),
                 child:  const Text(
                   "Descrição",
                   style: TextStyle(
@@ -114,7 +114,7 @@ class _EventDescriptionScreenState extends State<EventDescriptionScreen> {
 
   Padding buildWrappCategoriesBox() {
     return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
+                padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Wrap(
                   spacing: 10,
                   runSpacing: 20,
@@ -183,7 +183,6 @@ class _EventDescriptionScreenState extends State<EventDescriptionScreen> {
             MaterialPageRoute(builder: (context) => const HomeScreen())
         );
         break;
-
     }
 
   }
