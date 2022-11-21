@@ -49,12 +49,12 @@ namespace DeRole.Services.Service
             return ResultService.Ok("Usuário deletado.");
         }
 
-        public async Task<ResultService<dynamic>> GenerateTokenAsync(string email, string senha)
+        public async Task<ResultService<dynamic>> GenerateTokenAsync(LoginDto loginDto)
         {
-            if (email == null || senha == null)
+            if (loginDto == null)
                 return ResultService.Fail<dynamic>("Usuário ou senha devem ser informado.");
 
-            var user = await _userRepository.GetUserByEmailAndPasswordAssync(email, senha);
+            var user = await _userRepository.GetUserByEmailAndPasswordAssync(loginDto.Email, loginDto.Password);
 
             if (user == null)
                 return ResultService.Fail<dynamic>("Usuário ou senha inválidos");

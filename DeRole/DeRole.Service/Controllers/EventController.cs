@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DeRole.Api.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("derole/[controller]")]
     public class EventController : ControllerBase

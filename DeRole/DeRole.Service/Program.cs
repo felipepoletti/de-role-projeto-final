@@ -58,7 +58,7 @@ builder.Services.AddMvc().AddJsonOptions(options =>
     options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 });
 
-var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("projetoDeRole"));
+var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("projetofinalDeRole2022"));
 
 builder.Services.AddAuthentication(authOptions =>
 {

@@ -1,4 +1,5 @@
-﻿using DeRole.Services.Service.Interfaces;
+﻿using DeRole.Services.DTOs;
+using DeRole.Services.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeRole.Api.Controllers
@@ -16,9 +17,9 @@ namespace DeRole.Api.Controllers
 
         [HttpPost]
         [Route("token")]
-        public async Task<ActionResult> PostAuthorizationAsync([FromForm] string email, string senha)
+        public async Task<ActionResult> PostAuthorizationAsync([FromBody] LoginDto loginDto)
         {
-            var result = await _userService.GenerateTokenAsync(email, senha);
+            var result = await _userService.GenerateTokenAsync(loginDto);
 
             if (result.IsSuccess)
                 return Ok(result.Data);

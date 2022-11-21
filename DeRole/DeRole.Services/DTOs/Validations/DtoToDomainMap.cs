@@ -9,6 +9,8 @@ namespace DeRole.Services.DTOs.Validations
         {
             CreateMap<UserDto, User>();
 
+            CreateMap<LoginDto, User>();
+
             CreateMap<EventDto, Event>();
         }
     }
