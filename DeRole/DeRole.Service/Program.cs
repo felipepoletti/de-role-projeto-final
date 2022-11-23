@@ -52,7 +52,7 @@ builder.Services.AddAuthorization(auth =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "LibraryAPI", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "DeRole.API", Version = "v1" });
     var securitySchema = new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: {token}\"",
