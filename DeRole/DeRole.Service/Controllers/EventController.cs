@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DeRole.Api.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("derole/[controller]")]
     public class EventController : ControllerBase
@@ -67,6 +67,30 @@ namespace DeRole.Api.Controllers
         public async Task<ActionResult> DeleteAsync(int id)
         {
             var result = await _eventService.DeleteEventAsync(id);
+
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return BadRequest(result);
+        }
+
+        [HttpGet]
+        [Route("filter/{eventType}")]
+        public async Task<ActionResult> GetByEventTypeAsync(string eventType)
+        {
+            var result = await _eventService.GetEventsByEventTypeAsync(eventType);
+
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return BadRequest(result);
+        }
+
+        [HttpGet]
+        [Route("search/{eventName}")]
+        public async Task<ActionResult> GetByEventNameAsync(string eventName)
+        {
+            var result = await _eventService.GetEventsByNameAsync(eventName);
 
             if (result.IsSuccess)
                 return Ok(result);

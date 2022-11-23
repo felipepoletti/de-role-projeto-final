@@ -5,6 +5,7 @@ using DeRole.Entity.Domain;
 using DeRole.Services.DTOs;
 using DeRole.Services.DTOs.Validations;
 using DeRole.Services.Service.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace DeRole.Services.Service
 {
@@ -73,6 +74,38 @@ namespace DeRole.Services.Service
         {
             var events = await _eventRepository.GetAllEventsAsync();
             return ResultService.Ok<ICollection<EventDto>>(_mapper.Map<ICollection<EventDto>>(events));
+        }
+
+        public async Task<ResultService<ICollection<EventDto>>> GetEventsByEventTypeAsync(string eventType)
+        {
+            if (string.IsNullOrEmpty(eventType))
+            {
+                var listAllEvents = await _eventRepository.GetAllEventsAsync();
+                return ResultService.Ok<ICollection<EventDto>>(_mapper.Map<ICollection<EventDto>>(listAllEvents));
+            }
+
+            var eventsToList = await _eventRepository.GetEventsByEventTypeAsync(eventType);
+
+            if (eventsToList == null)
+                return ResultService.Fail<ICollection<EventDto>>("Nenhum evento encontrado!");
+
+            return ResultService.Ok<ICollection<EventDto>>(_mapper.Map<ICollection<EventDto>>(eventsToList));
+        }
+
+        public async Task<ResultService<ICollection<EventDto>>> GetEventsByNameAsync(string eventName)
+        {
+            if (string.IsNullOrEmpty(eventName))
+            {
+                var listAllEvents = await _eventRepository.GetAllEventsAsync();
+                return ResultService.Ok<ICollection<EventDto>>(_mapper.Map<ICollection<EventDto>>(listAllEvents));
+            }
+
+            var eventsToList = await _eventRepository.GetEventsByNameAsync(eventName);
+
+            if (eventsToList == null)
+                return ResultService.Fail<ICollection<EventDto>>("Nenhum evento encontrado!");
+
+            return ResultService.Ok<ICollection<EventDto>>(_mapper.Map<ICollection<EventDto>>(eventsToList));
         }
 
         public async Task<ResultService> UpdateEventAsync(EventDto eventDto)
