@@ -28,6 +28,9 @@ namespace DeRole.Data.Context.Mapping
             builder.Property(e => e.Date)
                 .HasColumnName("evento_data");
 
+            builder.Property(e => e.Time)
+                .HasColumnName("evento_hora");
+
             builder.Property(e => e.Address)
                 .HasColumnName("evento_endereco");
 

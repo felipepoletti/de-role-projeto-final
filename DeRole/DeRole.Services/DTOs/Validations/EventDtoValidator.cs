@@ -20,6 +20,11 @@ namespace DeRole.Services.DTOs.Validations
                 .NotEmpty()
                 .NotNull()
                 .WithMessage("A data do evento deve ser informada!");
+            
+            RuleFor(x => x.Time)
+                .NotEmpty()
+                .NotNull()
+                .WithMessage("A hora do evento deve ser informada!");
 
             RuleFor(x => x.Address)
                 .NotEmpty()

@@ -6,7 +6,8 @@
         public string EventName { get; set; }
         public decimal Price { get; set; }
         public string EventDescription { get; set; }
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
+        public string Time { get; set; }
         public string Address { get; set; }
         public string AddressNumber { get; set; }
         public string? AddressComplement { get; set; }

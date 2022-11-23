@@ -8,7 +8,8 @@ namespace DeRole.Entity.Domain
         public string EventName { get; private set; }
         public decimal Price { get; private set; }
         public string EventDescription { get; private set; }
-        public DateTime Date { get; private set; }
+        public string Date { get; private set; }
+        public string Time { get; private set; }
         public string Address { get; private set; }
         public string AddressNumber { get; private set; }
         public string? AddressComplement { get; private set; }
@@ -19,20 +20,20 @@ namespace DeRole.Entity.Domain
 
         public Event(string eventName,
             decimal price, string eventDescription,
-            DateTime date,
+            string date, string time,
             string address, string addressNumber,
             string? addressComplement,
             int userId, string eventType)
         {
             Validation(eventName, price, 
-                eventDescription, date, 
+                eventDescription, date, time, 
                 address, addressNumber,
                 addressComplement, eventType, userId);
         }
 
         public Event(int id, string eventName, 
             decimal price, string eventDescription, 
-            DateTime date, 
+            string date, string time,
             string address, string addressNumber, 
             string? addressComplement, 
             int userId, string eventType)
@@ -40,24 +41,25 @@ namespace DeRole.Entity.Domain
             EntityValidationException.When(Id < 0, "Id precisa ser informado");
             Id = id;
 
-            Validation(eventName, price, eventDescription, date, address, addressNumber, addressComplement, eventType, userId);
+            Validation(eventName, price, eventDescription, date, time, address, addressNumber, addressComplement, eventType, userId);
         }
 
-        public void Validation(string eventName, decimal price, string eventDescription, DateTime? date, string address, string addressNumber, string? addressComplement, string eventType, int userId)
+        public void Validation(string eventName, decimal price, string eventDescription, string date, string time, string address, string addressNumber, string? addressComplement, string eventType, int userId)
         {
             EntityValidationException.When(string.IsNullOrEmpty(eventName), "O nome do evento deve ser informado.");
             EntityValidationException.When(string.IsNullOrEmpty(eventDescription), "O nome do evento deve ser informado.");
-            EntityValidationException.When(!date.HasValue, "A data deve ser informada.");
+            EntityValidationException.When(string.IsNullOrEmpty(date), "A data deve ser informada.");
+            EntityValidationException.When(string.IsNullOrEmpty(time), "A hora deve ser informada.");
             EntityValidationException.When(string.IsNullOrEmpty(address), "O número endereço deve ser informado.");
             EntityValidationException.When(string.IsNullOrEmpty(addressNumber), "O número endereço deve ser informado.");
-            EntityValidationException.When(string.IsNullOrEmpty(addressComplement), "O complemento endereço deve ser informado.");
             EntityValidationException.When(string.IsNullOrEmpty(eventType), "O tipo do evento deve ser informado.");
             EntityValidationException.When(userId < 0 , "O usuário deve ser informado.");
 
             EventName = eventName;
             EventDescription = eventDescription;
             Price = price;
-            Date = Date;
+            Date = date;
+            Time = time;
             Address = address;
             AddressNumber = addressNumber;
             AddressComplement = addressComplement;
