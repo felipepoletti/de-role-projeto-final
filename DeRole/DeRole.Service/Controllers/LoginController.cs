@@ -16,7 +16,7 @@ namespace DeRole.Api.Controllers
         }
 
         [HttpPost]
-        [Route("token")]
+        [Route("authenticate")]
         public async Task<ActionResult> PostAuthorizationAsync([FromBody] LoginDto loginDto)
         {
             var result = await _userService.GenerateTokenAsync(loginDto);

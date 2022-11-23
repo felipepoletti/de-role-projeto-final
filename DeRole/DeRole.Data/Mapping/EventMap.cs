@@ -37,8 +37,8 @@ namespace DeRole.Data.Context.Mapping
             builder.Property(e => e.AddressComplement)
                 .HasColumnName("evento_endereco_complemento");
 
-            builder.Property(e => e.EventTypeId)
-                .HasColumnName("tipo_evento_id");
+            builder.Property(e => e.EventType)
+                .HasColumnName("evento_tipo");
 
             builder.Property(e => e.UserId)
                 .HasColumnName("usuario_id");

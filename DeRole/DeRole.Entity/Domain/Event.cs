@@ -13,7 +13,7 @@ namespace DeRole.Entity.Domain
         public string AddressNumber { get; private set; }
         public string? AddressComplement { get; private set; }
         public int UserId { get; private set; }
-        public int EventTypeId { get; private set; }
+        public string EventType { get; private set; }
 
         public User User { get; set; }
 
@@ -22,12 +22,12 @@ namespace DeRole.Entity.Domain
             DateTime date,
             string address, string addressNumber,
             string? addressComplement,
-            int userId, int eventTypeId)
+            int userId, string eventType)
         {
             Validation(eventName, price, 
                 eventDescription, date, 
                 address, addressNumber,
-                addressComplement, eventTypeId, userId);
+                addressComplement, eventType, userId);
         }
 
         public Event(int id, string eventName, 
@@ -35,15 +35,15 @@ namespace DeRole.Entity.Domain
             DateTime date, 
             string address, string addressNumber, 
             string? addressComplement, 
-            int userId, int eventTypeId)
+            int userId, string eventType)
         {
             EntityValidationException.When(Id < 0, "Id precisa ser informado");
             Id = id;
 
-            Validation(eventName, price, eventDescription, date, address, addressNumber, addressComplement, eventTypeId, userId);
+            Validation(eventName, price, eventDescription, date, address, addressNumber, addressComplement, eventType, userId);
         }
 
-        public void Validation(string eventName, decimal price, string eventDescription, DateTime? date, string address, string addressNumber, string? addressComplement, int eventTypeId, int userId)
+        public void Validation(string eventName, decimal price, string eventDescription, DateTime? date, string address, string addressNumber, string? addressComplement, string eventType, int userId)
         {
             EntityValidationException.When(string.IsNullOrEmpty(eventName), "O nome do evento deve ser informado.");
             EntityValidationException.When(string.IsNullOrEmpty(eventDescription), "O nome do evento deve ser informado.");
@@ -51,7 +51,7 @@ namespace DeRole.Entity.Domain
             EntityValidationException.When(string.IsNullOrEmpty(address), "O número endereço deve ser informado.");
             EntityValidationException.When(string.IsNullOrEmpty(addressNumber), "O número endereço deve ser informado.");
             EntityValidationException.When(string.IsNullOrEmpty(addressComplement), "O complemento endereço deve ser informado.");
-            EntityValidationException.When(eventTypeId < 0 , "O tipo do evento deve ser informado.");
+            EntityValidationException.When(string.IsNullOrEmpty(eventType), "O tipo do evento deve ser informado.");
             EntityValidationException.When(userId < 0 , "O usuário deve ser informado.");
 
             EventName = eventName;
@@ -61,7 +61,7 @@ namespace DeRole.Entity.Domain
             Address = address;
             AddressNumber = addressNumber;
             AddressComplement = addressComplement;
-            EventTypeId = eventTypeId;
+            EventType = eventType;
             UserId = userId;
         }
     }

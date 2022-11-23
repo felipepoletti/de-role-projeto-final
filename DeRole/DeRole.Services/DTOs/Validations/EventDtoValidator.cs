@@ -31,7 +31,7 @@ namespace DeRole.Services.DTOs.Validations
                 .NotNull()
                 .WithMessage("O número do endereço deve ser informado!");
 
-            RuleFor(x => x.EventTypeId)
+            RuleFor(x => x.EventType)
                 .NotEmpty()
                 .NotNull()
                 .WithMessage("O tipo de evento deve ser informado");

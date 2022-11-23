@@ -11,6 +11,6 @@
         public string AddressNumber { get; set; }
         public string? AddressComplement { get; set; }
         public int UserId { get; set; }
-        public int EventTypeId { get; set; }
+        public string EventType { get; set; }
     }
 }
