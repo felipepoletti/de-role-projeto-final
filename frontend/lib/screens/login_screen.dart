@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:store_api_flutter_course/consts/global_colors.dart';
+import 'package:store_api_flutter_course/screens/home_screen.dart';
 import 'register_screen.dart';
 import '../widgets/login_form.dart';
 
@@ -10,10 +12,14 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
+
+
 class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController _textEditingController;
   @override
   void initState() {
+
+
     _textEditingController = TextEditingController();
     super.initState();
   }
@@ -25,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     return GestureDetector(
         onTap: () {FocusScope.of(context).unfocus();
         },
