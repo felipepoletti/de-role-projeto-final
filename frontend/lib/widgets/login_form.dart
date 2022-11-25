@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:store_api_flutter_course/screens/home_screen.dart';
+import 'package:store_api_flutter_course/services/login_service.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -11,16 +12,19 @@ class LoginForm extends StatefulWidget {
 }
 
 class LoginFormState extends State<LoginForm> {
-
+  final loginApi = LoginApi();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController loginEmailController = TextEditingController();
   final TextEditingController loginPasswordController = TextEditingController();
   final snackbarError =  const SnackBar(
     content:  SizedBox(
-        height: 70,
-        child:  Text(
-            "Email e/ou senhas inválidos.",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 205))
+        height: 80,
+        child:  Align(
+          alignment: Alignment.center,
+          child: Text(
+              "Email e/ou senhas inválidos.",
+              style: TextStyle(fontSize: 20, color: Colors.white))
+        ),
     ),
     backgroundColor: Colors.red,
     duration: Duration(seconds: 3),
@@ -186,13 +190,15 @@ class LoginFormState extends State<LoginForm> {
   }
 
 
-  void validateForm() {
+  Future<void> validateForm() async {
     if (_formKey.currentState!.validate()) {
-      if( loginEmailController.text == "dev@seguros.com" && loginPasswordController.text == "dev123") {
-         Navigator.of(context).pushReplacement(
+      var response =  await loginApi.login(loginEmailController.text, loginPasswordController.text);
+      if(response == true) {
+        Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const HomeScreen())
         );
-      } else {
+      }
+      else {
         ScaffoldMessenger.of(context).showSnackBar(snackbarError);
       }
     }
