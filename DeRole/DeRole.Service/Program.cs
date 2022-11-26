@@ -22,6 +22,11 @@ builder.Services.AddMvc().AddJsonOptions(options =>
 
 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("projetofinalDeRole2022"));
 
+builder.Services.AddCors(p => p.AddPolicy("DeRoleApp", builder =>
+{
+    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+}));
+
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -85,6 +90,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("DeRoleApp");
 
 app.UseHttpsRedirection();
 
