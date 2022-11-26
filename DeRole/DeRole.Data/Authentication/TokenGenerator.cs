@@ -30,7 +30,8 @@ namespace DeRole.Data.Authentication
             return new
             {
                 access_token = token,
-                expirations = expires
+                expirations = expires,
+                user.Id
             };
         }
     }
