@@ -14,8 +14,6 @@ class CreateEventScreen extends StatefulWidget {
 class _CreateEventScreenState extends State<CreateEventScreen> {
 
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
