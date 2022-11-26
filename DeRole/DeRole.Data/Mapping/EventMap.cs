@@ -40,6 +40,9 @@ namespace DeRole.Data.Context.Mapping
             builder.Property(e => e.AddressComplement)
                 .HasColumnName("evento_endereco_complemento");
 
+            builder.Property(e => e.AddressDistrict)
+                .HasColumnName("evento_bairro");
+
             builder.Property(e => e.EventType)
                 .HasColumnName("evento_tipo");
 
