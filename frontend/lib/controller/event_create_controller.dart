@@ -9,32 +9,35 @@ class EventCreateController{
 
   Future<bool> createEvent(String eventoNome, double eventoPreco, String eventoDescricao,
       String eventoData, String eventoHora, String eventoEndereco,
-      String eventoEnderecoNumero, String eventoEnderecoComplemento, String eventoTipo) async {
+      String eventoEnderecoNumero, String eventoEnderecoComplemento, String eventoTipo, String bairro) async {
     final prefs = await SharedPreferences.getInstance();
     bool valid = false;
     var headers = {
-      "Content-type": "application/json"
+      "Content-type": "application/json",
+      "Authorization": "Bearer ${prefs.getString("access_token")}"
     };
     Map params = {
-      "id": null,
-      "evento_name": eventoNome,
-      "evento_preco": eventoPreco,
-      "evento_descricao":eventoDescricao,
-      "evento_data":eventoData,
-      "evento_hora":eventoHora,
-      "evento_endereco":eventoEndereco,
-      "evento_endereco_numero":eventoEnderecoNumero,
-      "evento_endereco_complemento":eventoEnderecoComplemento,
-      "evento_tipo":eventoTipo,
+      "id": 0,
+      "eventName": eventoNome,
+      "price": eventoPreco,
+      "eventDescription": eventoDescricao,
+      "date": eventoData,
+      "time": eventoHora,
+      "address": eventoEndereco,
+      "addressNumber": eventoEnderecoNumero,
+      "addressComplement": eventoEnderecoComplemento,
+      "addressDistrict": bairro,
+      "eventType": eventoTipo,
       "userId":1
 
     };
     var body = json.encode(params);
     try {
-      print(body);
+
 
       final response = await dio.post('https://10.0.2.2:7263/derole/Event',data: body, options: Options(headers: headers));
       print(response);
+      valid = true;
 
 
     } on DioError catch (e) {

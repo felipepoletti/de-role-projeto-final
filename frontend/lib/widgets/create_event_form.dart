@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,7 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:store_api_flutter_course/controller/event_create_controller.dart';
 import 'dart:io';
 
-import '../controller/login_controller.dart';
+import '../controller/user_controller.dart';
 import '../screens/home_screen.dart';
 
 class CreateEventForm extends StatefulWidget {
@@ -36,7 +38,7 @@ class CreateEventFormState extends State<CreateEventForm> {
   final TextEditingController _valueController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController timeinput = TextEditingController();
-  final TextEditingController dateEventController = TextEditingController();
+
   final TextEditingController zipCodeController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController bairroController = TextEditingController();
@@ -47,11 +49,7 @@ class CreateEventFormState extends State<CreateEventForm> {
 
   String _dropdownValue = "Escolha";
   List<String> dropDownOptions = [
-    "Escolha",
-    "Música",
-    "Teatro",
-    "Arte",
-    "Bar",
+    "Musicais", "Museus", "Feiras", "Teatro", "Religião", "Festivais", "Dança"
   ];
   void dropdownCallback(String? selectedValue) {
     if (selectedValue is String) {
@@ -60,6 +58,33 @@ class CreateEventFormState extends State<CreateEventForm> {
       });
     }
   }
+  final snackbarError =  const SnackBar(
+    content:  SizedBox(
+      height: 80,
+      child:  Align(
+          alignment: Alignment.center,
+          child: Text(
+              "Email e/ou senhas inválidos.",
+              style: TextStyle(fontSize: 20, color: Colors.white))
+      ),
+    ),
+    backgroundColor: Colors.red,
+    duration: Duration(seconds: 3),
+  );
+
+  final snackbarSucess =  const SnackBar(
+    content:  SizedBox(
+      height: 80,
+      child:  Align(
+          alignment: Alignment.center,
+          child: Text(
+              "Evento cadastrado com sucesso.",
+              style: TextStyle(fontSize: 20, color: Colors.white))
+      ),
+    ),
+    backgroundColor: Colors.green,
+    duration: Duration(seconds: 3),
+  );
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -467,11 +492,17 @@ class CreateEventFormState extends State<CreateEventForm> {
   }
   Future<void> validateForm() async {
     if (_formKey.currentState!.validate()) {
-      var response =  await eventCreate.createEvent(_titleController.text,double.parse(_valueController.text), _descriptionController.text, dateEventController.text, timeinput.text, enderecoController.text, numeroController.text, complementoController.text, _dropdownValue.toString());
+      var response =  await eventCreate.createEvent(_titleController.text,double.parse(_valueController.text),
+          _descriptionController.text, _eventDateController.text, timeinput.text, enderecoController.text,
+          numeroController.text, complementoController.text, _dropdownValue.toString(), bairroController.text);
       if(response == true) {
+        Timer(const Duration(seconds: 3), () => ScaffoldMessenger.of(context).showSnackBar(snackbarSucess));
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const HomeScreen())
         );
+      }
+      else {
+        ScaffoldMessenger.of(context).showSnackBar(snackbarError);
       }
 
     }

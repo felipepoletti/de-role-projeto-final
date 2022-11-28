@@ -1,7 +1,11 @@
+import 'dart:async';
 import 'dart:ffi';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:store_api_flutter_course/screens/home_screen.dart';
+import 'package:store_api_flutter_course/screens/login_screen.dart';
+
+import '../controller/user_controller.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -16,9 +20,33 @@ class RegisterForm extends StatefulWidget {
 }
 
 class RegisterFormState extends State<RegisterForm> {
-
-    final formKey = GlobalKey<FormState>();
-    final TextEditingController _birthDayCotroller = TextEditingController();
+    final userRegister = UserController();
+    final snackbarError =  const SnackBar(
+      content:  SizedBox(
+        height: 80,
+        child:  Align(
+            alignment: Alignment.center,
+            child: Text(
+                "Email e/ou senhas inválidos.",
+                style: TextStyle(fontSize: 20, color: Colors.white))
+        ),
+      ),
+      backgroundColor: Colors.red,
+      duration: Duration(seconds: 3),
+    );
+    final snackbarSucess =  const SnackBar(
+      content:  SizedBox(
+        height: 80,
+        child:  Align(
+            alignment: Alignment.center,
+            child: Text(
+                "Evento cadastrado com sucesso.",
+                style: TextStyle(fontSize: 20, color: Colors.white))
+        ),
+      ),
+      backgroundColor: Colors.green,
+      duration: Duration(seconds: 3),
+    );final _formKey = GlobalKey<FormState>();
     final TextEditingController _nameController = TextEditingController();
     final TextEditingController _emailController = TextEditingController();
     final TextEditingController _passwordController = TextEditingController();
@@ -26,14 +54,13 @@ class RegisterFormState extends State<RegisterForm> {
 
     @override
     void initState() {
-      _birthDayCotroller.text = "";
       super.initState();
     }
 
     @override
     Widget build(BuildContext context) {
       return Form(
-        key: formKey,
+        key: _formKey,
         child: Column(
           children: [
             const SizedBox(height: 30),
@@ -41,11 +68,8 @@ class RegisterFormState extends State<RegisterForm> {
             const SizedBox(height: 20),
             buildPaddingInputFields(buildContainerLabelInput("Email", "Digite seu email",2, _emailController)),
             const SizedBox(height: 20),
-            buildPaddingInputFields( buildContainerBirthDay(context)),
-            const SizedBox(height: 20),
             buildPaddingInputFields(buildContainerLabelInput("Senha", "Digite sua senha",3, _passwordController)),
-            const SizedBox(height: 20),
-            buildPaddingInputFields(buildPasswordConfirmInput()),
+
             const SizedBox(height: 40),
             buildSaveRegistterBtn()
           ],
@@ -58,7 +82,7 @@ class RegisterFormState extends State<RegisterForm> {
             width: double.infinity,
             height: 60,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {validateForm();},
               style: ElevatedButton.styleFrom(
                 backgroundColor:const Color(0xffF7C548),
               ),
@@ -117,48 +141,23 @@ class RegisterFormState extends State<RegisterForm> {
             ),
           );
     }
-
-      SizedBox buildContainerBirthDay(BuildContext context) {
-      return SizedBox(
-            child: Column(
-              children: [
-                const SizedBox(
-                  width: double.infinity,
-                  child:  Text(
-                    "Data de nascimento",
-                    style: TextStyle(
-                        color: Colors.black54,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TextFormField(
-                  controller: _birthDayCotroller, //editing controller of this TextField
-                  decoration: buildInputDecorationFields("Selecione sua data de nascimento"),
-                  readOnly: true,
-                  onTap: () async {
-                    DateTime? pickedDate = await showDatePicker(
-                        context: context, initialDate: DateTime.now(),
-                        helpText: "",
-                        initialEntryMode: DatePickerEntryMode.calendarOnly,
-                        firstDate: DateTime(1800),
-                        lastDate: DateTime(2101),
-
-                    );
-                    if(pickedDate != null ){
-                      String formattedDate = DateFormat('dd/MM/yyyy').format(pickedDate);
-                      setState( () {
-                        _birthDayCotroller.text = formattedDate;
-                      });
-                    }
-                  },
-                )
-              ],
-            ),
+    Future<void> validateForm() async {
+      if (_formKey.currentState!.validate()) {
+        var response =  await userRegister.registerUser(_nameController.text, _emailController.text, _passwordController.text);
+        if(response == true) {
+          ScaffoldMessenger.of(context).showSnackBar(snackbarSucess);
+          Timer(const Duration(seconds: 3), () =>
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const LoginScreen())
+              )
           );
+
+        }
+        else {
+          ScaffoldMessenger.of(context).showSnackBar(snackbarError);
+        }
+
+      }
     }
 
     SizedBox buildContainerLabelInput(String labelName,String hintText, int tipoValidacao, TextEditingController controller) {
@@ -183,7 +182,8 @@ class RegisterFormState extends State<RegisterForm> {
                 const SizedBox(height: 8),
                 TextFormField(
                   controller: controller,
-                  obscureText: tipoValidacao == 3 ? true : false,
+
+                  obscureText:false,
                   validator: (value) {
                     if(tipoValidacao == 1 || tipoValidacao == 3) {
                       if (value == null || value.isEmpty) {
@@ -230,9 +230,7 @@ class RegisterFormState extends State<RegisterForm> {
       );
     }
 
-    GlobalKey<FormState> getFormKey() {
-      return formKey;
-    }
+
 
 
 
