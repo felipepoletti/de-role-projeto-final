@@ -7,7 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:store_api_flutter_course/controller/event_create_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:store_api_flutter_course/models/EventModel.dart';
+import 'package:store_api_flutter_course/controller/event_controller.dart';
 import 'dart:io';
 
 import '../controller/user_controller.dart';
@@ -29,7 +31,6 @@ class CreateEventFormState extends State<CreateEventForm> {
   }
   XFile? image;
 
-  final eventCreate = EventCreateController();
 
   final ImagePicker picker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
@@ -49,7 +50,7 @@ class CreateEventFormState extends State<CreateEventForm> {
 
   String _dropdownValue = "Escolha";
   List<String> dropDownOptions = [
-    "Musicais", "Museus", "Feiras", "Teatro", "Religião", "Festivais", "Dança"
+    'Escolha','Musicais', 'Museus', 'Feiras', 'Teatro', 'Religião', 'Festivais', 'Dança'
   ];
   void dropdownCallback(String? selectedValue) {
     if (selectedValue is String) {
@@ -71,7 +72,6 @@ class CreateEventFormState extends State<CreateEventForm> {
     backgroundColor: Colors.red,
     duration: Duration(seconds: 3),
   );
-
   final snackbarSucess =  const SnackBar(
     content:  SizedBox(
       height: 80,
@@ -492,9 +492,10 @@ class CreateEventFormState extends State<CreateEventForm> {
   }
   Future<void> validateForm() async {
     if (_formKey.currentState!.validate()) {
-      var response =  await eventCreate.createEvent(_titleController.text,double.parse(_valueController.text),
-          _descriptionController.text, _eventDateController.text, timeinput.text, enderecoController.text,
-          numeroController.text, complementoController.text, _dropdownValue.toString(), bairroController.text);
+      final prefs = await SharedPreferences.getInstance();
+      var response =  await EventController.createEvent(EventModel(id: 0,eventName: _titleController.text,price: double.parse(_valueController.text),
+           eventDescription: _descriptionController.text, date: _eventDateController.text, time: timeinput.text, address: enderecoController.text,
+          addressNumber: numeroController.text, addressComplement: complementoController.text, eventType: _dropdownValue.toString(),userId: prefs.getInt("user_id"), addressDistrict: bairroController.text));
       if(response == true) {
         Timer(const Duration(seconds: 3), () => ScaffoldMessenger.of(context).showSnackBar(snackbarSucess));
         Navigator.of(context).pushReplacement(

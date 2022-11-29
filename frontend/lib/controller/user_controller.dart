@@ -20,7 +20,7 @@ class UserController{
     try {
       final response = await dio.post('https://10.0.2.2:7263/derole/Login/authenticate',data: body, options: Options(headers: headers));
       await prefs.setString("access_token", response.data["access_token"]);
-      print(response);
+      await prefs.setInt("user_id", response.data["id"]);
       valid = true;
 
     } on DioError catch (e) {

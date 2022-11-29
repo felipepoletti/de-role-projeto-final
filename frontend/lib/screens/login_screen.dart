@@ -18,8 +18,6 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController _textEditingController;
   @override
   void initState() {
-
-
     _textEditingController = TextEditingController();
     super.initState();
   }

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-
-import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:store_api_flutter_course/controller/event_controller.dart';
 import 'package:store_api_flutter_course/screens/create_event_screen.dart';
 import 'package:store_api_flutter_course/screens/event_description_screen.dart';
 import 'package:store_api_flutter_course/widgets/card_events_home.dart';
+
+import '../models/EventModel.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -17,8 +18,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     _textEditingController = TextEditingController();
+
     super.initState();
   }
+
   @override
   void dispose() {
     _textEditingController.dispose();
@@ -37,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.all(18.0),
                 child: ListView(
                   children: [
+
                     Container(
                         height: 70,
                         decoration: const BoxDecoration(
@@ -63,14 +67,33 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 28),
                     buildTitleCardHome("Música"),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => const EventDescriptionScreen())
-                        );
-                      },
-                      child: CardEventsHome(),
+                    FutureBuilder<EventModel>(
+                        future:EventController.getEvent("Musicais"),
+                        builder: (BuildContext context, AsyncSnapshot<EventModel> snapshot) {
+                          if(snapshot.hasData){
+
+                            buildTitleCardHome("Música");
+                          }else if (snapshot.hasError){
+                            buildTitleCardHome("aaaaa2");
+
+
+                          }else{
+                            buildTitleCardHome("aaa");
+
+                          }
+
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(builder: (context) => const EventDescriptionScreen())
+                              );
+                            },
+                            child: CardEventsHome(),
+                          );
+
+                        }
                     ),
+
 
                     const SizedBox(height: 38),
                     buildTitleCardHome("Teatro"),
