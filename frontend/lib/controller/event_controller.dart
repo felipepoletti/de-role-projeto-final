@@ -33,20 +33,72 @@ class EventController{
   static Future<EventModel> getEvent(String eventType) async {
     var dio = Dio();
     final prefs = await SharedPreferences.getInstance();
-    var response =null;
-    bool valid = false;
+    Response<Map> response;
+    Map? responseBody;
+    late EventModel event;
+
     var headers = {
       "Content-type": "application/json",
       "Authorization": "Bearer ${prefs.getString("access_token")}"
     };
     try {
+
       response = await dio.get('https://10.0.2.2:7263/derole/Event/filter/${eventType}', options: Options(headers: headers));
-      valid = true;
+      responseBody = response.data;
+      event = EventModel.fromJson(responseBody?.entries.first.value[0]);
     } on DioError catch (e) {
       print(e.response);
     };
 
+    return event;
+  }
+  static Future<EventModel> getEventDescription(int? id) async {
+    var dio = Dio();
+    final prefs = await SharedPreferences.getInstance();
+    Response<Map> response;
+    Map? responseBody;
+    late EventModel event;
 
-    return EventModel.fromJson(response.data);
+    var headers = {
+      "Content-type": "application/json",
+      "Authorization": "Bearer ${prefs.getString("access_token")}"
+    };
+    try {
+
+      response = await dio.get('https://10.0.2.2:7263/derole/Event/${id}', options: Options(headers: headers));
+      responseBody = response.data;
+      event = EventModel.fromJson(responseBody?.entries.first.value);
+
+
+    } on DioError catch (e) {
+      print(e.response);
+    };
+
+    return event;
+  }
+  static Future<List<EventModel>> getEventList(String name) async {
+    var dio = Dio();
+    final prefs = await SharedPreferences.getInstance();
+    Response<Map> response;
+    var eventList;
+    Map? responseBody;
+    late EventModel event;
+    var headers = {
+      "Content-type": "application/json",
+      "Authorization": "Bearer ${prefs.getString("access_token")}"
+    };
+    try {
+
+      response = await dio.get('https://10.0.2.2:7263/derole/Event/search/${name}', options: Options(headers: headers));
+      print(response);
+      responseBody = response.data;
+      eventList =  (responseBody as List)
+          .map((data) => EventModel.fromJson(data))
+          .toList();
+    } on DioError catch (e) {
+      print(e.response);
+    };
+
+    return eventList;
   }
 }

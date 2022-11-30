@@ -1,16 +1,16 @@
 class EventModel {
  int? id;
- String? eventName;
- double? price;
- String? eventDescription;
- String? date;
- String? time;
- String? address;
- String? addressNumber;
- String? addressComplement;
- String? addressDistrict;
+ String eventName;
+ double price;
+ String eventDescription;
+ String date;
+ String time;
+ String address;
+ String addressNumber;
+ String addressComplement;
+ String addressDistrict;
  int? userId;
- String? eventType;
+ String eventType;
 
 
  Map<String, dynamic> toMap() {

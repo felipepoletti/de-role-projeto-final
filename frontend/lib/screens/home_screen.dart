@@ -3,6 +3,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:store_api_flutter_course/controller/event_controller.dart';
 import 'package:store_api_flutter_course/screens/create_event_screen.dart';
 import 'package:store_api_flutter_course/screens/event_description_screen.dart';
+import 'package:store_api_flutter_course/screens/events_list_screen.dart';
 import 'package:store_api_flutter_course/widgets/card_events_home.dart';
 
 import '../models/EventModel.dart';
@@ -14,19 +15,30 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late TextEditingController _textEditingController;
+  final TextEditingController _searchEvents = TextEditingController();
   @override
   void initState() {
-    _textEditingController = TextEditingController();
-
     super.initState();
   }
 
   @override
   void dispose() {
-    _textEditingController.dispose();
+    _searchEvents.dispose();
     super.dispose();
   }
+  final snackbarError =  const SnackBar(
+    content:  SizedBox(
+      height: 80,
+      child:  Align(
+          alignment: Alignment.center,
+          child: Text(
+              "Parametros de busca invalidos",
+              style: TextStyle(fontSize: 20, color: Colors.white))
+      ),
+    ),
+    backgroundColor: Colors.red,
+    duration: Duration(seconds: 3),
+  );
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -66,29 +78,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     const SizedBox(height: 28),
-                    buildTitleCardHome("Música"),
+                    buildTitleCardHome("Musicais"),
+                    const SizedBox(height: 12),
                     FutureBuilder<EventModel>(
                         future:EventController.getEvent("Musicais"),
                         builder: (BuildContext context, AsyncSnapshot<EventModel> snapshot) {
-                          if(snapshot.hasData){
-
-                            buildTitleCardHome("Música");
-                          }else if (snapshot.hasError){
-                            buildTitleCardHome("aaaaa2");
-
-
-                          }else{
-                            buildTitleCardHome("aaa");
-
+                          var response;
+                          if(snapshot.hasData) {
+                            response = snapshot.data;
                           }
-
                           return GestureDetector(
                             onTap: () {
                               Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(builder: (context) => const EventDescriptionScreen())
+                                  MaterialPageRoute(builder: (context) => EventDescriptionScreen(id:snapshot.data?.id))
                               );
                             },
-                            child: CardEventsHome(),
+
+                            child: CardEventsHome(eventModel: response!),
                           );
 
                         }
@@ -96,25 +102,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
                     const SizedBox(height: 38),
-                    buildTitleCardHome("Teatro"),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => const EventDescriptionScreen())
-                        );
-                      },
-                      child: CardEventsHome(),
-                    ),
-                    const SizedBox(height: 38),
-                    buildTitleCardHome("Exposição"),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => const EventDescriptionScreen())
-                        );
-                      },
-                      child: CardEventsHome(),
-                    ),
                   ],
                 ),
               ),
@@ -140,7 +127,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               );
   }
-
+  Future<void> searchEvents() async {
+    if (_searchEvents != null) {
+      var response =  await EventController.getEventList(_searchEvents.text);
+      if(response != null) {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => EventListScreen(eventList: response))
+        );
+      }
+      else {
+        ScaffoldMessenger.of(context).showSnackBar(snackbarError);
+      }
+    }
+  }
   Align buildFilterBtn() {
     return Align(
       alignment: Alignment.center,
@@ -177,8 +176,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return SizedBox(
                 height: 60,
                 child: TextField(
+                  controller: _searchEvents,
                   decoration:  InputDecoration(
-                    suffixIcon: const Icon(IconlyLight.search, size: 26,),
+                    suffixIcon: GestureDetector(
+                      onTap: () {searchEvents();},
+                      child: const Icon(IconlyLight.search, size: 26),
+                    ),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4),
                         borderSide:  const BorderSide(width: 3, color: Color(0xffE3E3E3))
