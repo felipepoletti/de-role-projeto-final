@@ -1,11 +1,19 @@
 
+import 'dart:async';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:store_api_flutter_course/models/EventModel.dart';
+import 'package:store_api_flutter_course/controller/event_controller.dart';
 import 'dart:io';
+
+import '../controller/user_controller.dart';
+import '../screens/home_screen.dart';
 
 class CreateEventForm extends StatefulWidget {
   const CreateEventForm({super.key});
@@ -23,25 +31,26 @@ class CreateEventFormState extends State<CreateEventForm> {
   }
   XFile? image;
 
+
   final ImagePicker picker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _eventDateController = TextEditingController();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _valueController = TextEditingController();
-  final TextEditingController _decriptionController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController timeinput = TextEditingController();
-  final TextEditingController dateEventController = TextEditingController();
+
   final TextEditingController zipCodeController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController bairroController = TextEditingController();
+  final TextEditingController enderecoController = TextEditingController();
+  final TextEditingController complementoController = TextEditingController();
+  final TextEditingController numeroController = TextEditingController();
 
 
   String _dropdownValue = "Escolha";
   List<String> dropDownOptions = [
-    "Escolha",
-    "Música",
-    "Teatro",
-    "Arte",
-    "Bar",
+    'Escolha','Musicais', 'Museus', 'Feiras', 'Teatro', 'Religião', 'Festivais', 'Dança'
   ];
   void dropdownCallback(String? selectedValue) {
     if (selectedValue is String) {
@@ -50,9 +59,36 @@ class CreateEventFormState extends State<CreateEventForm> {
       });
     }
   }
+  final snackbarError =  const SnackBar(
+    content:  SizedBox(
+      height: 80,
+      child:  Align(
+          alignment: Alignment.center,
+          child: Text(
+              "Email e/ou senhas inválidos.",
+              style: TextStyle(fontSize: 20, color: Colors.white))
+      ),
+    ),
+    backgroundColor: Colors.red,
+    duration: Duration(seconds: 3),
+  );
+  final snackbarSucess =  const SnackBar(
+    content:  SizedBox(
+      height: 80,
+      child:  Align(
+          alignment: Alignment.center,
+          child: Text(
+              "Evento cadastrado com sucesso.",
+              style: TextStyle(fontSize: 20, color: Colors.white))
+      ),
+    ),
+    backgroundColor: Colors.green,
+    duration: Duration(seconds: 3),
+  );
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: _formKey,
       child: Column(
         children: [
           buildLabelCreateEvent("Escolha a imagem"),
@@ -78,14 +114,13 @@ class CreateEventFormState extends State<CreateEventForm> {
                   const SizedBox(height: 12),
                   buildRowTimePickers(),
                   const SizedBox(height: 20),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: buildLabelCreateEvent("CEP"),
-                  ),
+                  buildRowLabels("Bairro", "Endereço"),
                   const SizedBox(height: 12),
-                  buildFieldZipCode(),
+                  buildRowDistrictAdress(),
                   const SizedBox(height: 20),
-
+                  buildRowLabels("Número", "Complelmento"),
+                  buildRowNumberComplement(),
+                  const SizedBox(height: 20),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: buildLabelCreateEvent("Decrição"),
@@ -102,6 +137,73 @@ class CreateEventFormState extends State<CreateEventForm> {
         ],
       ),
     );
+  }
+
+  Row buildRowNumberComplement() {
+    return Row(
+                  children: [
+                    Expanded(
+                      flex: 4,
+                        child: TextFormField(
+                          controller: numeroController,
+                          decoration: buildInputDecorationFields("Numero"),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                        ),
+                    ),
+                    const Spacer(),
+                    Expanded(
+                      flex: 4,
+                      child: TextFormField(
+                        controller: complementoController,
+                        decoration: buildInputDecorationFields("Complemento"),
+
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'O campo não pode estar vazio.';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
+                );
+  }
+
+  Row buildRowDistrictAdress() {
+    return Row(
+                  children: [
+                    Expanded(
+                      flex:4,
+                        child: TextFormField(
+                          controller: bairroController,
+                          decoration: buildInputDecorationFields("Informe o bairro"),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'O campo não pode estar vazio.';
+                            }
+                            return null;
+                          },
+                        ),
+                    ),
+                    const Spacer(),
+                    Expanded(
+                      flex: 4,
+                      child: TextFormField(
+                          controller: enderecoController,
+                          decoration: buildInputDecorationFields("Endereço"),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'O campo não pode estar vazio.';
+                            }
+                            return null;
+                        },
+                        ),
+                    )
+                  ],
+                );
   }
 
   Stack buildImageSelectionField() {
@@ -194,7 +296,7 @@ class CreateEventFormState extends State<CreateEventForm> {
   SizedBox buildFieldDescription() {
     return SizedBox(
                   child: TextFormField(
-                    controller: _decriptionController,
+                    controller: _descriptionController,
                     decoration: buildInputDecorationFields("Descreva o evento"),
                     textInputAction: TextInputAction.newline,
                     keyboardType: TextInputType.multiline,
@@ -205,18 +307,14 @@ class CreateEventFormState extends State<CreateEventForm> {
                 );
   }
 
-  Align buildFieldZipCode() {
+  Align buildFieldBairro() {
     return Align(
                   alignment: Alignment.centerLeft,
                   child: SizedBox(
                     width: 160,
                     child: TextFormField(
-                      controller: zipCodeController,
-                      decoration: buildInputDecorationFields("Informe seu CEP"),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
+                      controller: bairroController,
+                      decoration: buildInputDecorationFields("Informe o bairro"),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'O campo não pode estar vazio.';
@@ -269,15 +367,13 @@ class CreateEventFormState extends State<CreateEventForm> {
                               initialTime: TimeOfDay.now(),
                               context: context,
                             );
+
                             if (pickedTime != null) {
-                              DateTime parsedTime = DateFormat.jm()
-                                  .parse(pickedTime.format(context).toString());
+                                String hourFomrated = pickedTime.hour < 10 ? "0${pickedTime.hour}" : pickedTime.hour.toString();
+                                String minuteFormated = pickedTime.minute < 10 ? "0${pickedTime.minute}" : pickedTime.minute.toString();
 
-                              String formattedTime =
-                              DateFormat('HH:mm:ss').format(parsedTime);
-
-                              setState(() {
-                                timeinput.text = formattedTime;
+                                setState(() {
+                                timeinput.text = "${hourFomrated}:${minuteFormated}";
                               });
                             }
                           },
@@ -314,6 +410,10 @@ class CreateEventFormState extends State<CreateEventForm> {
                         flex: 4,
                         child: TextFormField(
                           controller: _valueController,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
                           decoration: buildInputDecorationFields("Valor do evento")
                         )
                     )
@@ -349,7 +449,9 @@ class CreateEventFormState extends State<CreateEventForm> {
       width: double.infinity,
       height: 60,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          validateForm();
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor:const Color(0xffF7C548),
         ),
@@ -387,6 +489,24 @@ class CreateEventFormState extends State<CreateEventForm> {
       hintText: hintText,
       hintStyle: const TextStyle(fontSize: 16.00, color: Colors.black54),
     );
+  }
+  Future<void> validateForm() async {
+    if (_formKey.currentState!.validate()) {
+      final prefs = await SharedPreferences.getInstance();
+      var response =  await EventController.createEvent(EventModel(id: 0,eventName: _titleController.text,price: double.parse(_valueController.text),
+           eventDescription: _descriptionController.text, date: _eventDateController.text, time: timeinput.text, address: enderecoController.text,
+          addressNumber: numeroController.text, addressComplement: complementoController.text, eventType: _dropdownValue.toString(),userId: prefs.getInt("user_id"), addressDistrict: bairroController.text));
+      if(response == true) {
+        Timer(const Duration(seconds: 3), () => ScaffoldMessenger.of(context).showSnackBar(snackbarSucess));
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomeScreen())
+        );
+      }
+      else {
+        ScaffoldMessenger.of(context).showSnackBar(snackbarError);
+      }
+
+    }
   }
 }
 

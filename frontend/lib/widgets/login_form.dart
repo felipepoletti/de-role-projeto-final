@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:store_api_flutter_course/screens/home_screen.dart';
-import 'package:store_api_flutter_course/services/login_service.dart';
+import 'package:store_api_flutter_course/controller/user_controller.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -12,7 +12,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class LoginFormState extends State<LoginForm> {
-  final loginApi = LoginApi();
+  final loginApi = UserController();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController loginEmailController = TextEditingController();
   final TextEditingController loginPasswordController = TextEditingController();
