@@ -40,7 +40,7 @@ class RegisterFormState extends State<RegisterForm> {
         child:  Align(
             alignment: Alignment.center,
             child: Text(
-                "Evento cadastrado com sucesso.",
+                "Usuario cadastrado com sucesso.",
                 style: TextStyle(fontSize: 20, color: Colors.white))
         ),
       ),

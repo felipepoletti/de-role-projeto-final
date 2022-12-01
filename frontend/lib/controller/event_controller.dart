@@ -30,13 +30,11 @@ class EventController{
     return valid;
   }
 
-  static Future<EventModel> getEvent(String eventType) async {
+  static Future<List<EventModel>> getEvent(String eventType) async {
     var dio = Dio();
     final prefs = await SharedPreferences.getInstance();
     Response<Map> response;
-    Map? responseBody;
-    late EventModel event;
-
+    var eventList;
     var headers = {
       "Content-type": "application/json",
       "Authorization": "Bearer ${prefs.getString("access_token")}"
@@ -44,13 +42,14 @@ class EventController{
     try {
 
       response = await dio.get('https://10.0.2.2:7263/derole/Event/filter/${eventType}', options: Options(headers: headers));
-      responseBody = response.data;
-      event = EventModel.fromJson(responseBody?.entries.first.value[0]);
+      eventList =  (response.data?.values.first as  List)
+          .map((data) => EventModel.fromJson(data))
+          .toList();
     } on DioError catch (e) {
       print(e.response);
     };
 
-    return event;
+    return eventList;
   }
   static Future<EventModel> getEventDescription(int? id) async {
     var dio = Dio();
@@ -81,8 +80,7 @@ class EventController{
     final prefs = await SharedPreferences.getInstance();
     Response<Map> response;
     var eventList;
-    Map? responseBody;
-    late EventModel event;
+
     var headers = {
       "Content-type": "application/json",
       "Authorization": "Bearer ${prefs.getString("access_token")}"
@@ -90,9 +88,8 @@ class EventController{
     try {
 
       response = await dio.get('https://10.0.2.2:7263/derole/Event/search/${name}', options: Options(headers: headers));
-      print(response);
-      responseBody = response.data;
-      eventList =  (responseBody as List)
+
+      eventList =  (response.data?.values.first as  List)
           .map((data) => EventModel.fromJson(data))
           .toList();
     } on DioError catch (e) {

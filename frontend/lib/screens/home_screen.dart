@@ -80,9 +80,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 28),
                     buildTitleCardHome("Musicais"),
                     const SizedBox(height: 12),
-                    FutureBuilder<EventModel>(
+                    FutureBuilder<List<EventModel>>(
                         future:EventController.getEvent("Musicais"),
-                        builder: (BuildContext context, AsyncSnapshot<EventModel> snapshot) {
+                        builder: (BuildContext context, AsyncSnapshot<List<EventModel>> snapshot) {
                           var response;
                           if(snapshot.hasData) {
                             response = snapshot.data;
@@ -90,11 +90,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           return GestureDetector(
                             onTap: () {
                               Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(builder: (context) => EventDescriptionScreen(id:snapshot.data?.id))
+                                  MaterialPageRoute(builder: (context) => EventDescriptionScreen(id:snapshot.data?.first.id))
                               );
                             },
 
-                            child: CardEventsHome(eventModel: response!),
+                            child: CardEventsHome(eventModel: response.first),
                           );
 
                         }
@@ -140,35 +140,70 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
   }
+  Future<void> filterEvents() async {
+    if (_searchEvents != null) {
+      var response =  await EventController.getEventList(_searchEvents.text);
+      if(response != null) {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => EventListScreen(eventList: response))
+        );
+      }
+      else {
+        ScaffoldMessenger.of(context).showSnackBar(snackbarError);
+      }
+    }
+  }
+  Future<void> filterEventsFiltered(String eventType) async {
+    if (eventType != null) {
+      var response =  await EventController.getEvent(eventType);
+      if(response != null) {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => EventListScreen(eventList: response))
+        );
+      }
+      else {
+        ScaffoldMessenger.of(context).showSnackBar(snackbarError);
+      }
+    }
+  }
   Align buildFilterBtn() {
     return Align(
       alignment: Alignment.center,
-      child: RichText(
-        text: const TextSpan(
-            text: "filtrar",
-            style: TextStyle(
-                color: Color(0xff585252),
-                fontSize: 23,
-                fontWeight: FontWeight.bold
-            ),
-            children: [
-
-              WidgetSpan(
-                child: Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: SizedBox(
-                      height: 28,
-                      child: Icon(
-                          IconlyBold.filter,
-                          color: Color(0xff585252),
-                          size: 30
-                      ),
-                    )
-                ),
+      child: GestureDetector(
+        onTap: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) => _buildPopupDialog(context),
+            );
+        },
+        child: RichText(
+          text: const TextSpan(
+              text: "filtrar",
+              style: TextStyle(
+                  color: Color(0xff585252),
+                  fontSize: 23,
+                  fontWeight: FontWeight.bold
               ),
-            ]
+              children: [
+
+                WidgetSpan(
+                  child: Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: SizedBox(
+                        height: 28,
+                        child: Icon(
+                            IconlyBold.filter,
+                            color: Color(0xff585252),
+                            size: 30
+                        ),
+                      )
+                  ),
+                ),
+              ]
+          ),
         ),
       )
+
     );
   }
 
@@ -233,5 +268,37 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
   }
-
+  Widget _buildPopupDialog(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Popup example'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          GestureDetector(
+            onTap: () {
+              filterEventsFiltered("Musicais");
+            },
+            child: const Text(
+              "Musicais",
+              style: TextStyle(
+                color: Color(0xffF7C548),
+                fontWeight:FontWeight.bold,
+                fontSize: 18,
+                decoration: TextDecoration.underline,
+              )
+            ),
+          )
+        ],
+      ),
+      actions: <Widget>[
+         ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text('Close'),
+        ),
+      ],
+    );
+  }
 }

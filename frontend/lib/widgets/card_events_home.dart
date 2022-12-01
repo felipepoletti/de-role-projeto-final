@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/physics.dart';
 import 'package:store_api_flutter_course/models/EventModel.dart';
 class CardEventsHome extends StatefulWidget {
   final EventModel? eventModel;
@@ -12,9 +13,9 @@ class CardEventsHome extends StatefulWidget {
 
 class _CardEventsHomeState extends State<CardEventsHome> {
 
-
   @override
   Widget build(BuildContext context) {
+
     var eventName = widget.eventModel?.eventName;
     var price = widget.eventModel?.price;
     var address = widget.eventModel?.address;
