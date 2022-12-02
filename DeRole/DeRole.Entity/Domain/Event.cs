@@ -6,7 +6,7 @@ namespace DeRole.Entity.Domain
     {
         public int Id { get; private set; }
         public string EventName { get; private set; }
-        public double Price { get; private set; }
+        public decimal Price { get; private set; }
         public string EventDescription { get; private set; }
         public string Date { get; private set; }
         public string Time { get; private set; }
@@ -20,7 +20,7 @@ namespace DeRole.Entity.Domain
         public User User { get; set; }
 
         public Event(string eventName,
-            double price, string eventDescription,
+            decimal price, string eventDescription,
             string date, string time,
             string address, string addressNumber,
             string? addressComplement, string? addressDistrict,
@@ -34,7 +34,7 @@ namespace DeRole.Entity.Domain
         }
 
         public Event(int id, string eventName, 
-            double price, string eventDescription, 
+            decimal price, string eventDescription, 
             string date, string time,
             string address, string addressNumber, 
             string? addressComplement,
@@ -47,7 +47,7 @@ namespace DeRole.Entity.Domain
             Validation(eventName, price, eventDescription, date, time, address, addressNumber, addressComplement, addressDistrict, eventType, userId);
         }
 
-        public void Validation(string eventName, double price, string eventDescription, string date, string time, string address, string addressNumber, string? addressComplement, string? addressDistrict, string eventType, int userId)
+        public void Validation(string eventName, decimal price, string eventDescription, string date, string time, string address, string addressNumber, string? addressComplement, string? addressDistrict, string eventType, int userId)
         {
             EntityValidationException.When(string.IsNullOrEmpty(eventName), "O nome do evento deve ser informado.");
             EntityValidationException.When(string.IsNullOrEmpty(eventDescription), "O nome do evento deve ser informado.");

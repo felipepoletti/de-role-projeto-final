@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string EventName { get; set; }
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public string EventDescription { get; set; }
         public string Date { get; set; }
         public string Time { get; set; }
