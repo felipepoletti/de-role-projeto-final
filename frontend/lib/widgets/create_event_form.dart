@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,7 +11,6 @@ import 'package:store_api_flutter_course/models/EventModel.dart';
 import 'package:store_api_flutter_course/controller/event_controller.dart';
 import 'dart:io';
 
-import '../controller/user_controller.dart';
 import '../screens/home_screen.dart';
 
 class CreateEventForm extends StatefulWidget {
@@ -30,7 +28,6 @@ class CreateEventFormState extends State<CreateEventForm> {
     super.initState();
   }
   XFile? image;
-
 
   final ImagePicker picker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
@@ -498,7 +495,8 @@ class CreateEventFormState extends State<CreateEventForm> {
            eventDescription: _descriptionController.text, date: _eventDateController.text, time: timeinput.text, address: enderecoController.text,
           addressNumber: numeroController.text, addressComplement: complementoController.text, eventType: _dropdownValue.toString(),userId: prefs.getInt("user_id"), addressDistrict: bairroController.text));
       if(response == true) {
-        Timer(const Duration(seconds: 3), () => ScaffoldMessenger.of(context).showSnackBar(snackbarSucess));
+        ScaffoldMessenger.of(context).showSnackBar(snackbarSucess);
+        await Future.delayed(const Duration(seconds: 1));
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const HomeScreen())
         );

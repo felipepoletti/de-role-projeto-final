@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:store_api_flutter_course/screens/home_screen.dart';
 import 'package:store_api_flutter_course/controller/user_controller.dart';
 
@@ -16,6 +17,19 @@ class LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController loginEmailController = TextEditingController();
   final TextEditingController loginPasswordController = TextEditingController();
+  final snackbarSucess = const SnackBar(
+    content:  SizedBox(
+      height: 80,
+      child:  Align(
+          alignment: Alignment.center,
+          child: Text(
+              "Login realizado com sucesso.",
+              style: TextStyle(fontSize: 20, color: Colors.white))
+      ),
+    ),
+    backgroundColor: Colors.green,
+    duration: Duration(seconds: 1),
+  );
   final snackbarError =  const SnackBar(
     content:  SizedBox(
         height: 80,
@@ -192,13 +206,21 @@ class LoginFormState extends State<LoginForm> {
 
   Future<void> validateForm() async {
     if (_formKey.currentState!.validate()) {
-      var response =  await loginApi.login(loginEmailController.text, loginPasswordController.text);
+      Loader.isShown;
+      Loader.show(context,
+          progressIndicator: LinearProgressIndicator());
+      var response =  await UserController.login(loginEmailController.text, loginPasswordController.text);
       if(response == true) {
+        Loader.hide();
+        ScaffoldMessenger.of(context).showSnackBar(snackbarSucess);
+        await Future.delayed(const Duration(seconds: 1));
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const HomeScreen())
         );
       }
       else {
+        Loader.hide();
+
         ScaffoldMessenger.of(context).showSnackBar(snackbarError);
       }
     }

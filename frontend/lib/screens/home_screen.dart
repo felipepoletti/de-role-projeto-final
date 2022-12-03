@@ -1,3 +1,4 @@
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:store_api_flutter_course/controller/event_controller.dart';
@@ -20,9 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
   }
-
   @override
   void dispose() {
+    Loader.hide();
     _searchEvents.dispose();
     super.dispose();
   }
@@ -42,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     return GestureDetector(
         onTap: () {FocusScope.of(context).unfocus();
           },
@@ -52,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.all(18.0),
                 child: ListView(
                   children: [
-
                     Container(
                         height: 70,
                         decoration: const BoxDecoration(
@@ -84,10 +85,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         future:EventController.getEvent("Musicais"),
                         builder: (BuildContext context, AsyncSnapshot<List<EventModel>> snapshot) {
                           var response;
+
+                          Loader.isShown;
+                          Loader.show(context,
+                              progressIndicator: LinearProgressIndicator());
                           if(snapshot.hasData) {
                             response = snapshot.data;
+                            Loader.hide();
                           }
-                          return GestureDetector(
+                          return response != null ? GestureDetector(
                             onTap: () {
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(builder: (context) => EventDescriptionScreen(id:snapshot.data?.first.id))
@@ -95,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
 
                             child: CardEventsHome(eventModel: response.first),
-                          );
+                          ) : Text("Item nao encontrado");
 
                         }
                     ),
