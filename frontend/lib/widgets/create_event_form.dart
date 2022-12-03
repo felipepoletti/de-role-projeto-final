@@ -118,7 +118,8 @@ class CreateEventFormState extends State<CreateEventForm> {
                   const SizedBox(height: 12),
                   buildRowDistrictAdress(),
                   const SizedBox(height: 20),
-                  buildRowLabels("Número", "Complelmento"),
+                  buildRowLabels("Número", "Complemento"),
+                  const SizedBox(height: 12),
                   buildRowNumberComplement(),
                   const SizedBox(height: 20),
                   Align(

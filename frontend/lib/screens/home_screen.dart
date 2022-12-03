@@ -250,10 +250,6 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icon(IconlyBold.addUser),
               label: ""
           ),
-          BottomNavigationBarItem(
-              icon: Icon(IconlyBold.user2),
-              label: ""
-          ),
         ],
 
       );
@@ -270,35 +266,68 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   Widget _buildPopupDialog(BuildContext context) {
     return AlertDialog(
-      title: const Text('Popup example'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          GestureDetector(
-            onTap: () {
-              filterEventsFiltered("Musicais");
-            },
-            child: const Text(
-              "Musicais",
-              style: TextStyle(
-                color: Color(0xffF7C548),
-                fontWeight:FontWeight.bold,
-                fontSize: 18,
-                decoration: TextDecoration.underline,
-              )
-            ),
-          )
-        ],
+      title: const Text(
+          'Selecione uma categoria para filtrar a sua busca.',
+          style: TextStyle(
+            fontSize: 24
+          ),
+      ),
+      content: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            buildFilterOptions("Musicais"),
+            const SizedBox(height: 12),
+            buildFilterOptions("Museu"),
+            const SizedBox(height: 12),
+            buildFilterOptions("Feiras"),
+            const SizedBox(height: 12),
+            buildFilterOptions("Teatro"),
+            const SizedBox(height: 12),
+            buildFilterOptions("Religião"),
+            const SizedBox(height: 12),
+            buildFilterOptions("Festivais"),
+            const SizedBox(height: 12),
+            buildFilterOptions("Dança"),
+          ],
+        ),
       ),
       actions: <Widget>[
          ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Color(0xffF7C548))
+          ),
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text('Close'),
+          child: const Text(
+              'Fechar',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 22
+              ),
+          ),
         ),
       ],
+    );
+  }
+
+  GestureDetector buildFilterOptions(String filterChoice) {
+    return GestureDetector(
+          onTap: () {
+            filterEventsFiltered(filterChoice);
+          },
+          child: Text(
+              filterChoice,
+              style: const TextStyle(
+                color: Color(0xffF7C548),
+                fontWeight:FontWeight.bold,
+                fontSize: 26,
+                decoration: TextDecoration.underline,
+              )
+          ),
     );
   }
 }

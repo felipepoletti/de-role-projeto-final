@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/UserModel.dart';
+
 class UserController{
   var dio = Dio();
 
@@ -30,20 +32,15 @@ class UserController{
 
     return valid;
   }
-  Future<bool> registerUser(String name, String email, String password) async {
+  Future<bool> registerUser(UserModel userModel) async {
     final prefs = await SharedPreferences.getInstance();
     bool valid = false;
     var headers = {
       "Content-type": "application/json"
     };
-    Map params = {
-      "name": name,
-      "email": email,
-      "password": password
-    };
-    var body = json.encode(params);
+
     try {
-      final response = await dio.post('https://10.0.2.2:7263/derole/User',data: body, options: Options(headers: headers));
+      final response = await dio.post('https://10.0.2.2:7263/derole/User',data: userModel, options: Options(headers: headers));
 
       print(response);
       valid = true;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:store_api_flutter_course/screens/create_event_screen.dart';
 import 'package:store_api_flutter_course/screens/home_screen.dart';
 
 import '../controller/event_controller.dart';
@@ -154,24 +155,17 @@ class _EventDescriptionScreenState extends State<EventDescriptionScreen> {
 
   BottomNavigationBar buildBottomNavigationBar() {
     return BottomNavigationBar(
-
+      currentIndex: 0,
       type: BottomNavigationBarType.fixed,
-
-      selectedItemColor: const Color(0xffF7C548),
       onTap: _onTap,
+      selectedItemColor: const Color(0xffF7C548),
       items: const [
-
         BottomNavigationBarItem(
             icon: Icon(IconlyBold.home),
-            label: "",
-
-        ),
-        BottomNavigationBarItem(
-            icon: Icon(IconlyBold.upload),
             label: ""
         ),
         BottomNavigationBarItem(
-            icon: Icon(IconlyBold.user2),
+            icon: Icon(IconlyBold.addUser),
             label: ""
         ),
       ],
@@ -183,6 +177,11 @@ class _EventDescriptionScreenState extends State<EventDescriptionScreen> {
       case 0:
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const HomeScreen())
+        );
+        break;
+      case 1:
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const CreateEventScreen())
         );
         break;
     }

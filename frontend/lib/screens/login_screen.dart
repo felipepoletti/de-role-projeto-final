@@ -43,7 +43,8 @@ class _LoginScreenState extends State<LoginScreen> {
               buildFlexibleLogoHeader(size),
               const SizedBox(height: 40),
               const LoginForm(),
-              buildForgetPassword(),
+              const SizedBox(height: 20),
+
               buildCreateAccount(context),
             ],
             ),
@@ -113,22 +114,5 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Padding buildForgetPassword() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20),
-      child: RichText(
-          text: const TextSpan(
-              text: "esqueci minha senha",
-              style: TextStyle(
-                decoration: TextDecoration.underline,
-                decorationColor: Color(0xffF7C548),
-                decorationThickness: 2,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Color(0xffF7C548),
-              )
-          )
-      ),
-    );
-  }
+
 }
