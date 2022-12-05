@@ -31,7 +31,7 @@ class _EventListScreenState extends State<EventListScreen> {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => EventDescriptionScreen(id: item.id)));
               },
-              child: Expanded(child: CardEventsHome(eventModel: item)),
+              child: Expanded(child: CardEventsHome(eventModel: item, edit: false)),
             ),
           );
         },

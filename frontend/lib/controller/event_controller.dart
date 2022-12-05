@@ -45,6 +45,7 @@ class EventController{
       eventList =  (response.data?.values.first as  List)
           .map((data) => EventModel.fromJson(data))
           .toList();
+      print(eventList);
     } on DioError catch (e) {
       print(e.response);
     };
