@@ -1,10 +1,7 @@
 import 'dart:async';
-import 'dart:ffi';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:store_api_flutter_course/screens/home_screen.dart';
+import 'package:store_api_flutter_course/models/UserModel.dart';
 import 'package:store_api_flutter_course/screens/login_screen.dart';
-
 import '../controller/user_controller.dart';
 
 class RegisterForm extends StatefulWidget {
@@ -19,6 +16,19 @@ class RegisterForm extends StatefulWidget {
 
 }
 
+const snackbarSucess =  SnackBar(
+  content:  SizedBox(
+    height: 80,
+    child:  Align(
+        alignment: Alignment.center,
+        child: Text(
+            "Usuario cadastrado com sucesso.",
+            style: TextStyle(fontSize: 20, color: Colors.white))
+    ),
+  ),
+  backgroundColor: Colors.green,
+  duration: Duration(seconds: 1),
+);
 class RegisterFormState extends State<RegisterForm> {
     final userRegister = UserController();
     final snackbarError =  const SnackBar(
@@ -32,25 +42,12 @@ class RegisterFormState extends State<RegisterForm> {
         ),
       ),
       backgroundColor: Colors.red,
-      duration: Duration(seconds: 3),
+      duration: Duration(seconds: 1),
     );
-    final snackbarSucess =  const SnackBar(
-      content:  SizedBox(
-        height: 80,
-        child:  Align(
-            alignment: Alignment.center,
-            child: Text(
-                "Usuario cadastrado com sucesso.",
-                style: TextStyle(fontSize: 20, color: Colors.white))
-        ),
-      ),
-      backgroundColor: Colors.green,
-      duration: Duration(seconds: 3),
-    );final _formKey = GlobalKey<FormState>();
+    final _formKey = GlobalKey<FormState>();
     final TextEditingController _nameController = TextEditingController();
     final TextEditingController _emailController = TextEditingController();
     final TextEditingController _passwordController = TextEditingController();
-    final TextEditingController _passwordConfirmController = TextEditingController();
 
     @override
     void initState() {
@@ -106,51 +103,17 @@ class RegisterFormState extends State<RegisterForm> {
           );
     }
 
-    SizedBox buildPasswordConfirmInput() {
-      return SizedBox(
-            child: Column(
-              children:  [
-                const SizedBox(
-                  width: double.infinity,
-                  child:  Text(
-                    "Confirme sua senha",
-                    style: TextStyle(
-                        color: Colors.black54,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TextFormField(
-                    obscureText: false,
-                    controller: _passwordConfirmController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'O campo não pode estar vazio.';
-                      }
-                      if(_passwordController != _passwordConfirmController) {
-                        return 'Senha não é igual a inserida acima';
-                      }
-                      return null;
-                    },
-                    decoration: buildInputDecorationFields("Confirme sua senha")
-                )
-              ],
-            ),
-          );
-    }
+
     Future<void> validateForm() async {
       if (_formKey.currentState!.validate()) {
-        var response =  await userRegister.registerUser(_nameController.text, _emailController.text, _passwordController.text);
+        var response =  await UserController.registerUser(UserModel(id: 0, name: _nameController.text, email: _emailController.text, password: _passwordController.text));
         if(response == true) {
           ScaffoldMessenger.of(context).showSnackBar(snackbarSucess);
-          Timer(const Duration(seconds: 3), () =>
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const LoginScreen())
-              )
+          await Future.delayed(const Duration(seconds: 1));
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const LoginScreen())
           );
+
 
         }
         else {
@@ -183,7 +146,7 @@ class RegisterFormState extends State<RegisterForm> {
                 TextFormField(
                   controller: controller,
 
-                  obscureText:false,
+                  obscureText:tipoValidacao == 3 ? true : false,
                   validator: (value) {
                     if(tipoValidacao == 1 || tipoValidacao == 3) {
                       if (value == null || value.isEmpty) {
