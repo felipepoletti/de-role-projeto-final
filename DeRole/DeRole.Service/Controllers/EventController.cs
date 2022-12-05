@@ -97,5 +97,17 @@ namespace DeRole.Api.Controllers
 
             return BadRequest(result);
         }
+
+        [HttpGet]
+        [Route("users/{id}")]
+        public async Task<ActionResult> GetByUserIdAsync(int id)
+        {
+            var result = await _eventService.GetEventsByUserIdAsync(id);
+
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return BadRequest(result);
+        }
     }
 }

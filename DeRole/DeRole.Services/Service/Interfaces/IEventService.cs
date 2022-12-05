@@ -11,5 +11,6 @@ namespace DeRole.Services.Service.Interfaces
         Task<ResultService> DeleteEventAsync(int id);
         Task<ResultService<ICollection<EventDto>>> GetEventsByNameAsync(string eventName);
         Task<ResultService<ICollection<EventDto>>> GetEventsByEventTypeAsync(string eventType);
+        Task<ResultService<ICollection<EventDto>>> GetEventsByUserIdAsync(int id);
     }
 }

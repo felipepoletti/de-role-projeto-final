@@ -108,6 +108,12 @@ namespace DeRole.Services.Service
             return ResultService.Ok<ICollection<EventDto>>(_mapper.Map<ICollection<EventDto>>(eventsToList));
         }
 
+        public async Task<ResultService<ICollection<EventDto>>> GetEventsByUserIdAsync(int id)
+        {
+            var events = await _eventRepository.GetEventsByUserIdAsync(id);
+            return ResultService.Ok<ICollection<EventDto>>(_mapper.Map<ICollection<EventDto>>(events));
+        }
+
         public async Task<ResultService> UpdateEventAsync(EventDto eventDto)
         {
             if (eventDto == null)

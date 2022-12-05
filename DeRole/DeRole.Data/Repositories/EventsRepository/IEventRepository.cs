@@ -11,5 +11,6 @@ namespace DeRole.Data.Repositories.EventsRepository
         Task<Event> GetEventByIdAsync(int id);
         Task EditAsync(Event events);
         Task DeleteAsync(Event eventToDelete);
+        Task<ICollection<Event>> GetEventsByUserIdAsync(int id);
     }
 }
