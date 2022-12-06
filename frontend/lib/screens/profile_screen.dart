@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:store_api_flutter_course/controller/user_controller.dart';
 import 'package:store_api_flutter_course/models/UserModel.dart';
 import 'package:store_api_flutter_course/screens/home_screen.dart';
@@ -91,21 +90,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         _emailController.text = snapshot.data?.email as String;
                         Loader.hide();
                       }
-                      return Form(
-                          key: _formKey,
-                          child: Column(
-                            children: [
-                              const Text("Nome"),
-                              TextFormField(
-                                controller: _nameController,
-                              ),
-                              const Text("Email"),
-                              TextFormField(
-                                controller: _emailController,
-                              ),
-                              buildSaveRegistterBtn(),
-                            ],
-                          ));
+                      return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                        child: Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                const Text("Nome"),
+                                TextFormField(
+                                  controller: _nameController,
+                                  decoration: buildInputDecorationFields("Digite seu nome"),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'O campo não pode estar vazio.';
+                                    }
+                                  },
+                                ),
+                                const Text("Email"),
+                                TextFormField(
+                                  controller: _emailController,
+                                  decoration: buildInputDecorationFields("Digite seu email"),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty || !value.contains('@') || !value.contains('.')) {
+                                      return 'Email inválido, digite novamente';
+                                    }
+                                  },
+                                ),
+                                const SizedBox(height: 30),
+                                buildSaveRegistterBtn(),
+                              ],
+                            )),
+                      );
                     }) : Text("Erro");
               }),
           const SizedBox(height: 20),
@@ -118,11 +133,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
           const SizedBox(height: 40),
           const Align(
             alignment: Alignment.center,
-            child: Text("Seus eventos"),
+            child: Text(
+                "Seus eventos",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 22
+              ),
+            ),
           ),
+          const SizedBox(height: 40),
           Expanded(
             child: FutureBuilder<List<EventModel>>(
-                future: EventController.getEvent("Musicais"),
+                future: EventController.getEventById(userModel.id),
                 builder: (BuildContext context, AsyncSnapshot<List<EventModel>> eventoListResponse) {
                   var data;
                   if(eventoListResponse.hasData) {
@@ -203,6 +225,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
         BottomNavigationBarItem(icon: Icon(IconlyBold.addUser), label: ""),
         BottomNavigationBarItem(icon: Icon(IconlyBold.user2), label: ""),
       ],
+    );
+  }
+  InputDecoration buildInputDecorationFields(String hintText) {
+    return InputDecoration(
+      enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide:  const BorderSide(width: 3, color: Color(0xffF7C548))
+      ),
+      focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(width: 4, color: Color(0xffF7C548))
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide:  const BorderSide(width: 3, color: Colors.red),
+
+      ),
+      border:  OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(width: 4, color: Color(0xffF7C548))
+      ),
+      errorStyle: const TextStyle(
+        fontSize: 16.00,
+      ),
+      hintText: hintText,
+      hintStyle: const TextStyle(fontSize: 16.00, color: Colors.black54),
     );
   }
 

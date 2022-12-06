@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:store_api_flutter_course/models/EventModel.dart';
+import 'package:store_api_flutter_course/screens/create_event_screen.dart';
 
 class CardEventsHome extends StatefulWidget {
   final EventModel? eventModel;
@@ -83,15 +84,16 @@ class _CardEventsHomeState extends State<CardEventsHome> {
                               )),
                               Expanded(
                                   child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  price! > 0
-                                      ? price.toString().replaceAll(".", ",")
-                                      : 'Gratuito',
-                                  style: const TextStyle(
-                                      color: Color(0xffF7C548),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      price! > 0
+                                          ? price.toString().replaceAll(".", ",")
+                                          : 'Gratuito',
+                                      style: const TextStyle(
+                                          color: Color(0xffF7C548),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16
+                                      ),
                                 ),
                               ))
                             ],
@@ -105,15 +107,28 @@ class _CardEventsHomeState extends State<CardEventsHome> {
             ),
           ),
           if (widget.edit) ...[
-            SizedBox(
-                child: GestureDetector(
-                    onTap: () {},
-                    child: ElevatedButton(
-                      onPressed: () {
+            Padding(
+                padding: const EdgeInsets.only(bottom: 30),
+              child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) =>  CreateEventScreen(editEvent: true,  eventModelEdit: widget.eventModel!)));
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:const Color(0xffF7C548),
+                    ),
+                    child: const Text(
+                      "Editar",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18
+                      ),
+                    ),
+                  )),
+            )
 
-                      },
-                      child: Text("Editar"),
-                    ))),
           ] else ...[
             const SizedBox()
           ]

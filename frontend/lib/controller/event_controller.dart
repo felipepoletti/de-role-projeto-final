@@ -45,7 +45,27 @@ class EventController{
       eventList =  (response.data?.values.first as  List)
           .map((data) => EventModel.fromJson(data))
           .toList();
-      print(eventList);
+    } on DioError catch (e) {
+      print(e.response);
+    };
+
+    return eventList;
+  }
+  static Future<List<EventModel>> getEventById(int userId) async {
+    var dio = Dio();
+    final prefs = await SharedPreferences.getInstance();
+    Response<Map> response;
+    var eventList;
+    var headers = {
+      "Content-type": "application/json",
+      "Authorization": "Bearer ${prefs.getString("access_token")}"
+    };
+    try {
+
+      response = await dio.get('https://10.0.2.2:7263/derole/Event/users/$userId', options: Options(headers: headers));
+      eventList =  (response.data?.values.first as  List)
+          .map((data) => EventModel.fromJson(data))
+          .toList();
     } on DioError catch (e) {
       print(e.response);
     };
@@ -98,5 +118,27 @@ class EventController{
     };
 
     return eventList;
+  }
+
+  static Future<bool> updateEvent(EventModel eventModel) async {
+    var dio = Dio();
+    final prefs = await SharedPreferences.getInstance();
+    bool valid = false;
+    var headers = {
+      "Content-type": "application/json",
+      "Authorization": "Bearer ${prefs.getString("access_token")}"
+    };
+    Map params = eventModel.toMap();
+    var body = json.encode(params);
+    try {
+      final response = await dio.put('https://10.0.2.2:7263/derole/Event',data: body, options: Options(headers: headers));
+      print(response);
+      valid = true;
+    } on DioError catch (e) {
+      print(e.response);
+    };
+
+
+    return valid;
   }
 }

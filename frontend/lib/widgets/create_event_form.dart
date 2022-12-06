@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -76,16 +77,29 @@ class CreateEventFormState extends State<CreateEventForm> {
     backgroundColor: Colors.red,
     duration: Duration(seconds: 3),
   );
-  final snackbarSucess = const SnackBar(
+  final snackbarSucessCreated =  const SnackBar(
     content: SizedBox(
       height: 80,
       child: Align(
           alignment: Alignment.center,
-          child: Text("Evento cadastrado com sucesso.",
+          child: Text(
+              "Evento cadastrado com sucesso.",
               style: TextStyle(fontSize: 20, color: Colors.white))),
     ),
     backgroundColor: Colors.green,
-    duration: Duration(seconds: 3),
+    duration: Duration(seconds: 1),
+  );
+  final snackbarSucessUpdated =  const SnackBar(
+    content: SizedBox(
+      height: 80,
+      child: Align(
+          alignment: Alignment.center,
+          child: Text(
+              "Evento atualizado com sucesso.",
+              style: TextStyle(fontSize: 20, color: Colors.white))),
+    ),
+    backgroundColor: Colors.green,
+    duration: Duration(seconds: 1),
   );
   @override
   Widget build(BuildContext context) {
@@ -98,7 +112,7 @@ class CreateEventFormState extends State<CreateEventForm> {
               response = snapshot.data;
 
               _titleController.text = response.eventName;
-              _valueController.text = response.price;
+              _valueController.text = response.price.toString();
               _descriptionController.text = response.eventDescription;
              _eventDateController.text = response.date;
              timeinput.text = response.time;
@@ -482,11 +496,11 @@ class CreateEventFormState extends State<CreateEventForm> {
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xffF7C548),
         ),
-        child: const Align(
+        child:  Align(
           alignment: Alignment.center,
           child: Text(
-            "SALVAR",
-            style: TextStyle(
+            widget.editEvent ? "ATUALIZAR": "SALVAR",
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -522,8 +536,8 @@ class CreateEventFormState extends State<CreateEventForm> {
   Future<void> validateForm() async {
     if (_formKey.currentState!.validate()) {
       final prefs = await SharedPreferences.getInstance();
-      var response = await EventController.createEvent(EventModel(
-          id: 0,
+      EventModel eventModelObject = EventModel(
+          id: widget.editEvent? widget.eventModel?.id : 0,
           eventName: _titleController.text,
           price: double.parse(_valueController.text),
           eventDescription: _descriptionController.text,
@@ -533,14 +547,20 @@ class CreateEventFormState extends State<CreateEventForm> {
           addressNumber: numeroController.text,
           addressComplement: complementoController.text,
           eventType: _dropdownValue.toString(),
-          userId: prefs.getInt("user_id"),
-          addressDistrict: bairroController.text));
+          userId: widget.editEvent? widget.eventModel?.userId : prefs.getInt("user_id"),
+          addressDistrict: bairroController.text);
+      Loader.isShown;
+
+      var response = widget.editEvent ? await EventController.updateEvent(eventModelObject) : await EventController.createEvent(eventModelObject);
       if (response == true) {
-        ScaffoldMessenger.of(context).showSnackBar(snackbarSucess);
+
+        ScaffoldMessenger.of(context).showSnackBar(widget.editEvent ? snackbarSucessUpdated : snackbarSucessCreated);
         await Future.delayed(const Duration(seconds: 1));
+        Loader.hide();
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const HomeScreen()));
       } else {
+        Loader.hide();
         ScaffoldMessenger.of(context).showSnackBar(snackbarError);
       }
     }
