@@ -24,20 +24,23 @@ class _EventListScreenState extends State<EventListScreen> {
         itemBuilder: (context, index) {
           var item = widget.eventList[index];
 
-          return Padding(
-            padding: const EdgeInsets.only(left: 18, right: 18, top: 40),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => EventDescriptionScreen(id: item.id)));
-              },
-              child: Expanded(child: CardEventsHome(eventModel: item, edit: false)),
-            ),
+          return SizedBox(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 18, right: 18, top: 40),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => EventDescriptionScreen(id: item.id)));
+                  },
+                  child: CardEventsHome(eventModel: item, edit: false),
+                ),
+              )
           );
         },
       ),
       appBar: AppBar(
           titleSpacing: 0.0,
+          automaticallyImplyLeading: false,
           title: Row(
             children: [
               GestureDetector(
@@ -56,7 +59,8 @@ class _EventListScreenState extends State<EventListScreen> {
                 textAlign: TextAlign.center,
               ),
             ],
-          )),
+          ))
+      ,
     );
   }
 }

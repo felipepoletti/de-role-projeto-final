@@ -57,6 +57,13 @@ class UserController {
     return userId!;
   }
 
+  static Future<String> getUserToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString("access_token");
+    print(token);
+    return token!;
+  }
+
   static Future<bool> registerUser(UserModel userModel) async {
     var dio = Dio();
     final prefs = await SharedPreferences.getInstance();

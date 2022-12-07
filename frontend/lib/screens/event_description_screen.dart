@@ -3,6 +3,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:store_api_flutter_course/screens/create_event_screen.dart';
 import 'package:store_api_flutter_course/screens/home_screen.dart';
+import 'package:store_api_flutter_course/screens/profile_screen.dart';
 
 import '../controller/event_controller.dart';
 import '../models/EventModel.dart';
@@ -43,7 +44,6 @@ class _EventDescriptionScreenState extends State<EventDescriptionScreen> {
   ListView buildListViewEvent(response) {
     return ListView(
       children: [
-        buildBannerImage(),
         const SizedBox(height: 20),
         Row(
           children: [
@@ -157,13 +157,14 @@ class _EventDescriptionScreenState extends State<EventDescriptionScreen> {
 
   BottomNavigationBar buildBottomNavigationBar() {
     return BottomNavigationBar(
-      currentIndex: 0,
+      currentIndex: 1,
       type: BottomNavigationBarType.fixed,
       onTap: _onTap,
       selectedItemColor: const Color(0xffF7C548),
       items: const [
         BottomNavigationBarItem(icon: Icon(IconlyBold.home), label: ""),
         BottomNavigationBarItem(icon: Icon(IconlyBold.addUser), label: ""),
+        BottomNavigationBarItem(icon: Icon(IconlyBold.user2), label: ""),
       ],
     );
   }
@@ -176,7 +177,11 @@ class _EventDescriptionScreenState extends State<EventDescriptionScreen> {
         break;
       case 1:
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const CreateEventScreen(editEvent: false,)));
+            MaterialPageRoute(builder: (context) => const CreateEventScreen(editEvent: false)));
+        break;
+      case 2:
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const ProfileScreen()));
         break;
     }
   }

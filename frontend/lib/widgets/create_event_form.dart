@@ -134,9 +134,6 @@ class CreateEventFormState extends State<CreateEventForm> {
     key: _formKey,
     child: Column(
       children: [
-        buildLabelCreateEvent("Escolha a imagem"),
-        const SizedBox(height: 20),
-        buildImageSelectionField(),
         const SizedBox(height: 40),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),

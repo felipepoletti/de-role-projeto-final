@@ -51,7 +51,7 @@ class EventController{
 
     return eventList;
   }
-  static Future<List<EventModel>> getEventById(int userId) async {
+  static Future<List<EventModel>> getEventById() async {
     var dio = Dio();
     final prefs = await SharedPreferences.getInstance();
     Response<Map> response;
@@ -62,7 +62,7 @@ class EventController{
     };
     try {
 
-      response = await dio.get('https://10.0.2.2:7263/derole/Event/users/$userId', options: Options(headers: headers));
+      response = await dio.get('https://10.0.2.2:7263/derole/Event/users/${prefs.getInt("user_id")}', options: Options(headers: headers));
       eventList =  (response.data?.values.first as  List)
           .map((data) => EventModel.fromJson(data))
           .toList();

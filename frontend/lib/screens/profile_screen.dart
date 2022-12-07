@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -22,6 +23,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  int? idUser;
   final _formKey = GlobalKey<FormState>();
   var userModel;
 
@@ -43,7 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       height: 80,
       child: Align(
           alignment: Alignment.center,
-          child: Text("Email e/ou senhas inválidos.",
+          child: Text("Erro ao atualizar.",
               style: TextStyle(fontSize: 20, color: Colors.white))),
     ),
     backgroundColor: Colors.red,
@@ -58,11 +60,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     Loader.show(context, progressIndicator: LinearProgressIndicator());
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text(
+            "Perfil do usário",
+          style: TextStyle(
+            color: Colors.white
+          ),
+        ),
+      ),
       bottomNavigationBar: buildBottomNavigationBar(),
       body: Column(
         children: [
@@ -70,44 +80,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
               future: UserController.getUserId(),
               builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
                 Loader.isShown;
-
-                var responseIdUser;
                 if (snapshot.hasData) {
-
-                  responseIdUser = snapshot.data! ;
-                  Future.delayed(const Duration(seconds: 2));
-
+                  idUser = snapshot.data! ;
                 }
 
-                return responseIdUser != null ? FutureBuilder<UserModel>(
-                    future: UserController.getUser(responseIdUser),
+                return idUser != null ? FutureBuilder<UserModel>(
+                    future: UserController.getUser(idUser!),
                     builder: (BuildContext context,
                         AsyncSnapshot<UserModel> snapshot) {
                       if (snapshot.hasData) {
                         userModel = snapshot.data;
-
                         _nameController.text = snapshot.data?.name as String;
                         _emailController.text = snapshot.data?.email as String;
                         Loader.hide();
                       }
                       return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                          padding: const EdgeInsets.only(right: 20, left: 20, top: 30, bottom: 20),
                         child: Form(
                             key: _formKey,
                             child: Column(
                               children: [
-                                const Text("Nome"),
+                                buildTitleFieldsProfile("Nome"),
+                                const SizedBox(height: 12),
                                 TextFormField(
                                   controller: _nameController,
                                   decoration: buildInputDecorationFields("Digite seu nome"),
+                                  style: const TextStyle(
+                                      color: Color(0xff000000), fontWeight: FontWeight.w600, fontSize: 16),
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'O campo não pode estar vazio.';
                                     }
                                   },
                                 ),
-                                const Text("Email"),
+                                 const SizedBox(height: 20),
+                                 buildTitleFieldsProfile("Email"),
+                                const SizedBox(height: 12),
                                 TextFormField(
+                                  style: const TextStyle(
+                                      color: Color(0xff000000), fontWeight: FontWeight.w600, fontSize: 16),
                                   controller: _emailController,
                                   decoration: buildInputDecorationFields("Digite seu email"),
                                   validator: (value) {
@@ -116,21 +127,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     }
                                   },
                                 ),
-                                const SizedBox(height: 30),
+                                const SizedBox(height: 15),
                                 buildSaveRegistterBtn(),
                               ],
                             )),
                       );
                     }) : Text("Erro");
               }),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           const Divider(
             height: 3,
             thickness: 1,
             endIndent: 0,
             color: Colors.black,
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 15),
           const Align(
             alignment: Alignment.center,
             child: Text(
@@ -141,10 +152,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 18),
           Expanded(
             child: FutureBuilder<List<EventModel>>(
-                future: EventController.getEventById(userModel.id),
+                future: EventController.getEventById(),
                 builder: (BuildContext context, AsyncSnapshot<List<EventModel>> eventoListResponse) {
                   var data;
                   if(eventoListResponse.hasData) {
@@ -167,6 +178,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
     );
+  }
+
+  Align buildTitleFieldsProfile(String title) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        title,
+        style: const TextStyle(
+            color: Color(0xff000000), fontWeight: FontWeight.bold, fontSize: 16),
+      ),
+    );
+
   }
 
   Future<void> validatUpdateForm() async {

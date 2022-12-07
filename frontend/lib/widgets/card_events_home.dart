@@ -35,17 +35,7 @@ class _CardEventsHomeState extends State<CardEventsHome> {
             child: Row(
               children: [
                 Expanded(
-                  child: Stack(
-                    children: [
-                      Image.asset("assets/images/placeholder-img.jpg",
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: 100)
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
+                  flex: 12,
                   child: Container(
                     alignment: Alignment.centerLeft,
                     child: Padding(

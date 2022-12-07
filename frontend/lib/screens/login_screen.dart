@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
+import 'package:store_api_flutter_course/controller/user_controller.dart';
+import 'package:store_api_flutter_course/screens/home_screen.dart';
 import 'register_screen.dart';
 import '../widgets/login_form.dart';
 
@@ -26,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    Loader.show(context, progressIndicator: LinearProgressIndicator());
 
     return GestureDetector(
         onTap: () {
@@ -36,16 +40,35 @@ class _LoginScreenState extends State<LoginScreen> {
           resizeToAvoidBottomInset: false,
           body: Padding(
             padding: const EdgeInsets.all(18.0),
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                buildFlexibleLogoHeader(size),
-                const SizedBox(height: 40),
-                const LoginForm(),
-                const SizedBox(height: 20),
-                buildCreateAccount(context),
-              ],
-            ),
+            child:  FutureBuilder<String>(
+            future: UserController.getUserToken(),
+            builder: (BuildContext context, AsyncSnapshot<String> tokenRespoonse) {
+              Loader.isShown;
+
+              if(tokenRespoonse.hasData) {
+                print("teste");
+                Future.delayed(Duration(seconds: 1), () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  );
+                });
+
+              }
+              Loader.hide();
+                return Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    buildFlexibleLogoHeader(size),
+                    const SizedBox(height: 40),
+                    const LoginForm(),
+                    const SizedBox(height: 20),
+                    buildCreateAccount(context),
+                  ],
+                );
+              }
+            )
+
           ),
         ));
   }
@@ -87,7 +110,10 @@ class _LoginScreenState extends State<LoginScreen> {
       ]),
     );
   }
+  changeRoute() async {
+    print("teste");
 
+  }
   Flexible buildFlexibleLogoHeader(Size size) {
     return Flexible(
       child: Container(
