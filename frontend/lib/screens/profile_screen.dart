@@ -1,9 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:store_api_flutter_course/controller/user_controller.dart';
 import 'package:store_api_flutter_course/models/UserModel.dart';
 import 'package:store_api_flutter_course/screens/home_screen.dart';
@@ -23,6 +23,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  int? idUser;
   final _formKey = GlobalKey<FormState>();
   var userModel;
 
@@ -44,7 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       height: 80,
       child: Align(
           alignment: Alignment.center,
-          child: Text("Email e/ou senhas inválidos.",
+          child: Text("Erro ao atualizar.",
               style: TextStyle(fontSize: 20, color: Colors.white))),
     ),
     backgroundColor: Colors.red,
@@ -59,11 +60,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     Loader.show(context, progressIndicator: LinearProgressIndicator());
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text(
+            "Perfil do usário",
+          style: TextStyle(
+            color: Colors.white
+          ),
+        ),
+      ),
       bottomNavigationBar: buildBottomNavigationBar(),
       body: Column(
         children: [
@@ -71,58 +80,82 @@ class _ProfileScreenState extends State<ProfileScreen> {
               future: UserController.getUserId(),
               builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
                 Loader.isShown;
-
-                var responseIdUser;
                 if (snapshot.hasData) {
-
-                  responseIdUser = snapshot.data! ;
-                  Future.delayed(const Duration(seconds: 2));
-
+                  idUser = snapshot.data! ;
                 }
 
-                return responseIdUser != null ? FutureBuilder<UserModel>(
-                    future: UserController.getUser(responseIdUser),
+                return idUser != null ? FutureBuilder<UserModel>(
+                    future: UserController.getUser(idUser!),
                     builder: (BuildContext context,
                         AsyncSnapshot<UserModel> snapshot) {
                       if (snapshot.hasData) {
                         userModel = snapshot.data;
-
                         _nameController.text = snapshot.data?.name as String;
                         _emailController.text = snapshot.data?.email as String;
                         Loader.hide();
                       }
-                      return Form(
-                          key: _formKey,
-                          child: Column(
-                            children: [
-                              const Text("Nome"),
-                              TextFormField(
-                                controller: _nameController,
-                              ),
-                              const Text("Email"),
-                              TextFormField(
-                                controller: _emailController,
-                              ),
-                              buildSaveRegistterBtn(),
-                            ],
-                          ));
+                      return Padding(
+                          padding: const EdgeInsets.only(right: 20, left: 20, top: 30, bottom: 20),
+                        child: Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                buildTitleFieldsProfile("Nome"),
+                                const SizedBox(height: 12),
+                                TextFormField(
+                                  controller: _nameController,
+                                  decoration: buildInputDecorationFields("Digite seu nome"),
+                                  style: const TextStyle(
+                                      color: Color(0xff000000), fontWeight: FontWeight.w600, fontSize: 16),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'O campo não pode estar vazio.';
+                                    }
+                                  },
+                                ),
+                                 const SizedBox(height: 20),
+                                 buildTitleFieldsProfile("Email"),
+                                const SizedBox(height: 12),
+                                TextFormField(
+                                  style: const TextStyle(
+                                      color: Color(0xff000000), fontWeight: FontWeight.w600, fontSize: 16),
+                                  controller: _emailController,
+                                  decoration: buildInputDecorationFields("Digite seu email"),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty || !value.contains('@') || !value.contains('.')) {
+                                      return 'Email inválido, digite novamente';
+                                    }
+                                  },
+                                ),
+                                const SizedBox(height: 15),
+                                buildSaveRegistterBtn(),
+                              ],
+                            )),
+                      );
                     }) : Text("Erro");
               }),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           const Divider(
             height: 3,
             thickness: 1,
             endIndent: 0,
             color: Colors.black,
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 15),
           const Align(
             alignment: Alignment.center,
-            child: Text("Seus eventos"),
+            child: Text(
+                "Seus eventos",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 22
+              ),
+            ),
           ),
+          const SizedBox(height: 18),
           Expanded(
             child: FutureBuilder<List<EventModel>>(
-                future: EventController.getEvent("Musicais"),
+                future: EventController.getEventById(),
                 builder: (BuildContext context, AsyncSnapshot<List<EventModel>> eventoListResponse) {
                   var data;
                   if(eventoListResponse.hasData) {
@@ -145,6 +178,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
     );
+  }
+
+  Align buildTitleFieldsProfile(String title) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        title,
+        style: const TextStyle(
+            color: Color(0xff000000), fontWeight: FontWeight.bold, fontSize: 16),
+      ),
+    );
+
   }
 
   Future<void> validatUpdateForm() async {
@@ -203,6 +248,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
         BottomNavigationBarItem(icon: Icon(IconlyBold.addUser), label: ""),
         BottomNavigationBarItem(icon: Icon(IconlyBold.user2), label: ""),
       ],
+    );
+  }
+  InputDecoration buildInputDecorationFields(String hintText) {
+    return InputDecoration(
+      enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide:  const BorderSide(width: 3, color: Color(0xffF7C548))
+      ),
+      focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(width: 4, color: Color(0xffF7C548))
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide:  const BorderSide(width: 3, color: Colors.red),
+
+      ),
+      border:  OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(width: 4, color: Color(0xffF7C548))
+      ),
+      errorStyle: const TextStyle(
+        fontSize: 16.00,
+      ),
+      hintText: hintText,
+      hintStyle: const TextStyle(fontSize: 16.00, color: Colors.black54),
     );
   }
 

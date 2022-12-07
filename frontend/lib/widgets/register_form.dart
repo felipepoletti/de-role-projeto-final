@@ -145,7 +145,6 @@ class RegisterFormState extends State<RegisterForm> {
                 const SizedBox(height: 8),
                 TextFormField(
                   controller: controller,
-
                   obscureText:tipoValidacao == 3 ? true : false,
                   validator: (value) {
                     if(tipoValidacao == 1 || tipoValidacao == 3) {
@@ -192,11 +191,6 @@ class RegisterFormState extends State<RegisterForm> {
         hintStyle: const TextStyle(fontSize: 16.00, color: Colors.black54),
       );
     }
-
-
-
-
-
 
 }
 

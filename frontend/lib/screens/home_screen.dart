@@ -243,7 +243,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _onTap(int tabIndex) async {
-    final prefs = await SharedPreferences.getInstance();
 
     switch (tabIndex) {
       case 1:
