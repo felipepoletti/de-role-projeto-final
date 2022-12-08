@@ -22,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
+    Loader.hide();
     _textEditingController.dispose();
     super.dispose();
   }
@@ -29,7 +30,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    Loader.show(context, progressIndicator: LinearProgressIndicator());
 
     return GestureDetector(
         onTap: () {
@@ -40,23 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
           resizeToAvoidBottomInset: false,
           body: Padding(
             padding: const EdgeInsets.all(18.0),
-            child:  FutureBuilder<String>(
-            future: UserController.getUserToken(),
-            builder: (BuildContext context, AsyncSnapshot<String> tokenRespoonse) {
-              Loader.isShown;
-
-              if(tokenRespoonse.hasData) {
-                print("teste");
-                Future.delayed(Duration(seconds: 1), () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen()),
-                  );
-                });
-
-              }
-              Loader.hide();
-                return Column(
+            child:  Column(
                   children: [
                     const SizedBox(height: 20),
                     buildFlexibleLogoHeader(size),
@@ -65,12 +49,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 20),
                     buildCreateAccount(context),
                   ],
-                );
-              }
+                )
+
             )
 
           ),
-        ));
+  );
+
   }
 
   Padding buildCreateAccount(BuildContext context) {
@@ -110,10 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ]),
     );
   }
-  changeRoute() async {
-    print("teste");
 
-  }
   Flexible buildFlexibleLogoHeader(Size size) {
     return Flexible(
       child: Container(

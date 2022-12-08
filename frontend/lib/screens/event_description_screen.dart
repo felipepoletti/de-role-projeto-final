@@ -11,14 +11,19 @@ import '../models/EventModel.dart';
 class EventDescriptionScreen extends StatefulWidget {
   const EventDescriptionScreen({super.key, required this.id});
   final int? id;
+
   @override
   State<EventDescriptionScreen> createState() => _EventDescriptionScreenState();
 }
 
 class _EventDescriptionScreenState extends State<EventDescriptionScreen> {
   @override
+  void dispose() {
+    Loader.hide();
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,

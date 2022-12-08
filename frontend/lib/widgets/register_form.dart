@@ -7,8 +7,6 @@ import '../controller/user_controller.dart';
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
 
-
-
   @override
   RegisterFormState createState() {
     return RegisterFormState();
@@ -53,6 +51,7 @@ class RegisterFormState extends State<RegisterForm> {
     void initState() {
       super.initState();
     }
+    @override
 
     @override
     Widget build(BuildContext context) {

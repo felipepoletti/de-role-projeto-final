@@ -4,12 +4,10 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:store_api_flutter_course/models/EventModel.dart';
 import 'package:store_api_flutter_course/controller/event_controller.dart';
-import 'dart:io';
 
 import '../screens/home_screen.dart';
 
@@ -31,9 +29,12 @@ class CreateEventFormState extends State<CreateEventForm> {
     super.initState();
   }
 
-  XFile? image;
+  @override
+  void dispose() {
+    Loader.hide();
+    super.dispose();
+  }
 
-  final ImagePicker picker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _eventDateController = TextEditingController();
   final TextEditingController _titleController = TextEditingController();
@@ -244,40 +245,6 @@ class CreateEventFormState extends State<CreateEventForm> {
     );
   }
 
-  Stack buildImageSelectionField() {
-    return Stack(
-      children: [
-        image != null
-            ? Image.file(File(image!.path),
-                fit: BoxFit.cover, width: double.infinity, height: 200)
-            : Image.asset("assets/images/placeholder-img.jpg",
-                fit: BoxFit.cover, width: double.infinity, height: 200),
-        Positioned(
-            right: 0,
-            left: 0,
-            bottom: 0,
-            top: 0,
-            child: InkWell(
-              onTap: () {
-                myAlert();
-              },
-              child: const Icon(
-                Icons.camera_alt,
-                color: Color(0xffF7C548),
-                size: 40,
-              ),
-            ))
-      ],
-    );
-  }
-
-  Future getImage(ImageSource media) async {
-    var img = await picker.pickImage(source: media);
-
-    setState(() {
-      image = img;
-    });
-  }
 
   TextFormField buildTitleField() {
     return TextFormField(
@@ -292,50 +259,6 @@ class CreateEventFormState extends State<CreateEventForm> {
     );
   }
 
-  void myAlert() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            title: Text('Escolha de onde voce ira selecionar a foto'),
-            content: Container(
-              height: MediaQuery.of(context).size.height / 6,
-              child: Column(
-                children: [
-                  ElevatedButton(
-                    //if user click this button, user can upload image from gallery
-                    onPressed: () {
-                      Navigator.pop(context);
-                      getImage(ImageSource.gallery);
-                    },
-                    child: Row(
-                      children: const [
-                        Icon(Icons.image),
-                        Text('Galeria'),
-                      ],
-                    ),
-                  ),
-                  ElevatedButton(
-                    //if user click this button. user can upload image from camera
-                    onPressed: () {
-                      Navigator.pop(context);
-                      getImage(ImageSource.camera);
-                    },
-                    child: Row(
-                      children: const [
-                        Icon(Icons.camera),
-                        Text('Camera'),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
 
   SizedBox buildFieldDescription() {
     return SizedBox(

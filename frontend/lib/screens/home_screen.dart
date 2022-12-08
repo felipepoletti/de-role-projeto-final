@@ -46,8 +46,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
+    Loader.show(context,
+        progressIndicator: LinearProgressIndicator());
     return GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -91,8 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       var response;
 
                       Loader.isShown;
-                      Loader.show(context,
-                          progressIndicator: LinearProgressIndicator());
+
                       if (snapshot.hasData) {
                         response = snapshot.data;
                         Loader.hide();

@@ -54,6 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void dispose() {
+    Loader.hide();
     _nameController.dispose();
     _emailController.dispose();
     super.dispose();

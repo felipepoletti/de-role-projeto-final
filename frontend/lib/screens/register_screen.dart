@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:store_api_flutter_course/screens/login_screen.dart';
-import 'package:store_api_flutter_course/widgets/login_form.dart';
 import '../widgets/register_form.dart';
-import 'home_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
