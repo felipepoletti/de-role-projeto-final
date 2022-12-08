@@ -34,7 +34,7 @@ namespace DeRole.Data.Repositories.EventsRepository
 
         public async Task<ICollection<Event>> GetAllEventsAsync()
         {
-            return await _applicationDbContext.Events.ToListAsync();
+            return await _applicationDbContext.Events.OrderByDescending(x => x.Id).ToListAsync();
         }
 
         public async Task<Event> GetEventByIdAsync(int id)
