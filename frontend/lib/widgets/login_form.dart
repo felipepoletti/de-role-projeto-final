@@ -48,27 +48,32 @@ class LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Column(
-        children: [
-          buildEmailLabel(),
-          const SizedBox(
-            height: 6,
-          ),
-          buildTextFormFieldEmail(),
-          const SizedBox(height: 20),
-          buildPasswordLabel(),
-          const SizedBox(
-            height: 6,
-          ),
-          buildTextFormFieldPassword(),
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          children: [
+            buildEmailLabel(),
+            const SizedBox(
+              height: 6,
+            ),
+            buildTextFormFieldEmail(),
+            const SizedBox(height: 20),
+            buildPasswordLabel(),
+            const SizedBox(
+              height: 6,
+            ),
+            buildTextFormFieldPassword(),
           Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: buildButtonLogin() ,
+              padding: const EdgeInsets.only(top: 20),
+              child: buildButtonLogin() ,
 
-          ),
+            ),
 
-        ],
-      ),
+
+          ],
+        ),
+      )
+
     );
   }
 

@@ -16,10 +16,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: Colors.white,
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         body: SizedBox(
           height: size.height,
           child: ListView(
+            shrinkWrap: true,
             children: [
               SizedBox(
                 width: double.infinity,

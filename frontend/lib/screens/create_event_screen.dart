@@ -26,6 +26,8 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: true,
+
       bottomNavigationBar: buildBottomNavigationBar(),
       body: ListView(
           children:  [

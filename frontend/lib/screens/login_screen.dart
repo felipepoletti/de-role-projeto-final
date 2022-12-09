@@ -37,10 +37,11 @@ class _LoginScreenState extends State<LoginScreen> {
         },
         child: Scaffold(
           backgroundColor: Colors.white,
-          resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: true,
           body: Padding(
             padding: const EdgeInsets.all(18.0),
-            child:  Column(
+            child:  ListView(
+              shrinkWrap: true,
                   children: [
                     const SizedBox(height: 20),
                     buildFlexibleLogoHeader(size),
